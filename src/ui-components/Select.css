@@ -1,0 +1,46 @@
+.select-container {
+  position: relative;
+  align-self: flex-start;
+  border: 1px solid var(--ui-border-color);
+  border-radius: var(--ui-border-radius);
+  background-color: var(--ui-background-color);
+}
+
+.select-container::after {
+  content: '';
+  position: absolute;
+  top: 40%;
+  right: 10px;
+  width: 0;
+  height: 0;
+  padding: 3px;
+  border: solid var(--text-color);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  pointer-events: none;
+}
+
+.select-container label {
+  position: absolute;
+  top: 6px;
+  padding: 0 10px;
+  font-size: 12px;
+  text-wrap: nowrap;
+  color: var(--text-color);
+  cursor: pointer;
+  pointer-events: none;
+}
+
+select {
+  padding: 22px 34px 10px 10px;
+  box-sizing: content-box;
+  border: 0px;
+  border-radius: var(--ui-border-radius);
+  appearance: none;
+  font-size: 16px;
+  text-align: left;
+  color: var(--text-color);
+  background-color: transparent;
+  cursor: pointer;
+}

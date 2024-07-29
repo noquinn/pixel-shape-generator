@@ -1,0 +1,42 @@
+.switch {
+  width: 39px;
+  height: 26px;
+  margin: 0;
+  flex-shrink: 0;
+  border-radius: 72px;
+  appearance: none;
+  background-color: var(--ui-void-color);
+  position: relative;
+  cursor: pointer;
+}
+
+.switch::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  background-color: var(--ui-background-color);
+  border-radius: 50%;
+}
+
+.switch,
+.switch::after {
+  transition: all 100ms ease-in-out;
+}
+
+.switch:checked {
+  background-color: var(--cell-color);
+}
+
+.switch:checked::after {
+  left: 16px;
+  background-color: #fff;
+}
+
+.switch-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}

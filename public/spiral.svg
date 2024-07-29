@@ -1,0 +1,44 @@
+<svg width="120" height="120" xmlns="http://www.w3.org/2000/svg" viewBox="-50 -60 120 120">
+  <g fill="#5cceee">
+    <rect width="10" height="10" class="cell" x="60" y="0"></rect>
+    <rect width="10" height="10" class="cell" x="60" y="-10"></rect>
+    <rect width="10" height="10" class="cell" x="60" y="-20"></rect>
+    <rect width="10" height="10" class="cell" x="60" y="-30"></rect>
+    <rect width="10" height="10" class="cell" x="50" y="-40"></rect>
+    <rect width="10" height="10" class="cell" x="40" y="-40"></rect>
+    <rect width="10" height="10" class="cell" x="30" y="-50"></rect>
+    <rect width="10" height="10" class="cell" x="20" y="-60"></rect>
+    <rect width="10" height="10" class="cell" x="10" y="-60"></rect>
+    <rect width="10" height="10" class="cell" x="0" y="-60"></rect>
+    <rect width="10" height="10" class="cell" x="-10" y="-50"></rect>
+    <rect width="10" height="10" class="cell" x="-20" y="-50"></rect>
+    <rect width="10" height="10" class="cell" x="-30" y="-40"></rect>
+    <rect width="10" height="10" class="cell" x="-40" y="-40"></rect>
+    <rect width="10" height="10" class="cell" x="-40" y="-30"></rect>
+    <rect width="10" height="10" class="cell" x="-50" y="-20"></rect>
+    <rect width="10" height="10" class="cell" x="-50" y="-10"></rect>
+    <rect width="10" height="10" class="cell" x="-50" y="0"></rect>
+    <rect width="10" height="10" class="cell" x="-50" y="10"></rect>
+    <rect width="10" height="10" class="cell" x="-40" y="20"></rect>
+    <rect width="10" height="10" class="cell" x="-40" y="30"></rect>
+    <rect width="10" height="10" class="cell" x="-30" y="30"></rect>
+    <rect width="10" height="10" class="cell" x="-20" y="40"></rect>
+    <rect width="10" height="10" class="cell" x="-10" y="40"></rect>
+    <rect width="10" height="10" class="cell" x="0" y="40"></rect>
+    <rect width="10" height="10" class="cell" x="10" y="40"></rect>
+    <rect width="10" height="10" class="cell" x="20" y="30"></rect>
+    <rect width="10" height="10" class="cell" x="30" y="20"></rect>
+    <rect width="10" height="10" class="cell" x="30" y="10"></rect>
+    <rect width="10" height="10" class="cell" x="30" y="0"></rect>
+    <rect width="10" height="10" class="cell" x="30" y="-10"></rect>
+    <rect width="10" height="10" class="cell" x="20" y="-20"></rect>
+    <rect width="10" height="10" class="cell" x="10" y="-20"></rect>
+    <rect width="10" height="10" class="cell" x="0" y="-20"></rect>
+    <rect width="10" height="10" class="cell" x="-10" y="-20"></rect>
+    <rect width="10" height="10" class="cell" x="-20" y="-10"></rect>
+    <rect width="10" height="10" class="cell" x="-20" y="0"></rect>
+    <rect width="10" height="10" class="cell" x="-10" y="10"></rect>
+    <rect width="10" height="10" class="cell" x="0" y="10"></rect>
+    <rect width="10" height="10" class="cell" x="0" y="0"></rect>
+  </g>
+</svg>
