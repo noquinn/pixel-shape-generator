@@ -7,6 +7,7 @@ import {
   Show,
 } from 'solid-js';
 import type { Shape } from './types';
+import Rectangle from './geometry/Rectangle.tsx';
 import RegularPolygon from './geometry/RegularPolygon.tsx';
 import ReuleauxPolygon from './geometry/ReuleauxPolygon.tsx';
 import Superellipse from './geometry/Superellipse.tsx';
@@ -47,6 +48,7 @@ function App() {
     ArchimedianSpiral,
     Star,
     Spirangle,
+    Rectangle,
   ];
 
   const [selectedShape, setSelectedShape] = createSignal<Shape>(shapes[0]);
