@@ -29,21 +29,19 @@
 .slider::-webkit-slider-thumb {
   height: 16px;
   width: 16px;
-  border: 2px solid var(--cell-color);
   border-radius: 50%;
   appearance: none;
   -webkit-appearance: none;
-  background-color: var(--ui-background-color);
+  background-color: var(--cell-color);
   box-shadow: none;
 }
 
 .slider::-moz-range-thumb {
   width: 12px;
   height: 12px;
-  border: 2px solid var(--cell-color);
   border-radius: 50%;
   appearance: none;
   -webkit-appearance: none;
-  background-color: var(--ui-background-color);
+  background-color: var(--cell-color);
   box-shadow: none;
 }

@@ -4,7 +4,7 @@
   --cell-highlight-color: #a33111;
   --grid-line-color: #d4d4d4;
   --text-color: #000;
-  --ui-background-color: #ffffff;
+  --ui-background-color: #fdfdfd;
   --ui-border-color: #d1d5db;
   --ui-void-color: #d0d4de;
   --github-mark: url('/github-mark.svg');
@@ -13,12 +13,12 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --backdrop-color: #1d1d1d;
+    --backdrop-color: rgb(9 9 11);
     --cell-color: #1186a6;
     --cell-highlight-color: #942c10;
     --grid-line-color: #2f2f2f;
     --text-color: #dadada;
-    --ui-background-color: #1d1d1d;
+    --ui-background-color: rgb(24 24 27);
     --ui-border-color: #606060;
     --ui-void-color: #4e4e4e;
     --github-mark: url('/github-mark-white.svg');
@@ -68,10 +68,10 @@ body {
   position: relative;
   box-sizing: border-box;
   margin: 16px;
-  border: 1px solid var(--text-color);
+  border: 1px solid var(--ui-border-color);
   border-radius: var(--ui-border-radius);
   overflow: hidden;
-  background-color: var(--backdrop-color);
+  background-color: var(--ui-background-color);
   user-select: none;
 }
 
@@ -144,7 +144,7 @@ button {
 }
 
 #zoom-controls > button:first-child {
-  border-bottom-width: 1px;
+  border-bottom-width: 0;
   border-radius: var(--ui-border-radius) var(--ui-border-radius) 0 0;
 }
 
@@ -181,7 +181,6 @@ button {
     flex: 2;
     max-width: 60%;
     margin-right: 0;
-    border-right: 1px solid var(--text-color);
   }
 }
 
@@ -194,7 +193,7 @@ button {
     aspect-ratio: 1;
     max-height: 60%;
     margin: 0;
-    border-width: 0 0 1px 0;
+    border-width: 1px 0 1px 0;
     border-radius: 0;
   }
 }
