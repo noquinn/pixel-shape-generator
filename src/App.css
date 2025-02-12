@@ -56,6 +56,7 @@ body {
   height: 100%;
   margin: 0;
   background-color: var(--backdrop-color);
+  scrollbar-color: var(--ui-void-color) var(--ui-background-color);
 }
 
 #root {
@@ -140,7 +141,6 @@ button {
   font-size: 24px;
   background-color: var(--ui-background-color);
   color: var(--text-color);
-  font-family: monospace;
 }
 
 #zoom-controls > button:first-child {

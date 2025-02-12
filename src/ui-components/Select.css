@@ -17,7 +17,6 @@
   border: solid var(--text-color);
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
-  -webkit-transform: rotate(45deg);
   pointer-events: none;
 }
 
@@ -43,4 +42,8 @@ select {
   color: var(--text-color);
   background-color: transparent;
   cursor: pointer;
+}
+
+option {
+  color: initial;
 }

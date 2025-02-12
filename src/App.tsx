@@ -154,7 +154,7 @@ function App() {
             disabled={camera().zoom === MIN_ZOOM}
             onClick={() => changeZoom(1.2)}
           >
-            -
+            −
           </button>
         </div>
         <Show when={pointer().cell !== null}>

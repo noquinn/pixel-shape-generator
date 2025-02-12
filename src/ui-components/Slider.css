@@ -21,7 +21,6 @@
   margin: 8px 0;
   border-radius: 16px;
   appearance: none;
-  -webkit-appearance: none;
   background-color: var(--ui-void-color);
   cursor: pointer;
 }
@@ -31,7 +30,6 @@
   width: 16px;
   border-radius: 50%;
   appearance: none;
-  -webkit-appearance: none;
   background-color: var(--cell-color);
   box-shadow: none;
 }
@@ -41,7 +39,6 @@
   height: 12px;
   border-radius: 50%;
   appearance: none;
-  -webkit-appearance: none;
   background-color: var(--cell-color);
   box-shadow: none;
 }
