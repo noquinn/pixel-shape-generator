@@ -60,7 +60,7 @@ const handleMouseMove = (event: MouseEvent): void => {
       x: Math.floor(
         (pointer().position!.x + camera().position.x) * camera().zoom
       ),
-      y: Math.floor(
+      y: -Math.floor(
         (pointer().position!.y + camera().position.y) * camera().zoom
       ),
     },
@@ -114,7 +114,7 @@ const handleMouseLeave = (): void => {
 
 const handleWheel = (event: WheelEvent): void => {
   event.preventDefault();
-  const delta = 1 + 0.05 * Math.sign(event.deltaY);
+  const delta = 1 + 0.001 * event.deltaY;
   changeZoom(delta, pointer().position?.x, pointer().position?.y);
 };
 
