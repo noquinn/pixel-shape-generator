@@ -1,11 +1,13 @@
 import { createSignal, For, JSX } from 'solid-js';
 import type { Shape } from '../types.d.ts';
 import Slider from '../ui-components/Slider.tsx';
+import Switch from '../ui-components/Switch.tsx';
 import Cell from './helpers/Cell.tsx';
 
 const [loops, setLoops] = createSignal(3);
 const [diameter, setDiameter] = createSignal(25);
 const [rotation, setRotation] = createSignal(0);
+const [invert, setInvert] = createSignal(false);
 
 const ShapeComponent = (): JSX.Element => {
   const a = diameter() / 4 / loops() / Math.PI;
@@ -16,7 +18,7 @@ const ShapeComponent = (): JSX.Element => {
   let coords: { x: number; y: number }[] = [];
   while (theta > 0) {
     const radius = a * theta;
-    const x = Math.round(radius * Math.cos(theta + r));
+    const x = (invert() ? -1 : 1) * Math.round(radius * Math.cos(theta + r));
     const y = Math.round(radius * Math.sin(theta + r));
     theta -= 1 / radius;
     if (x === lastX && y === lastY) continue;
@@ -52,6 +54,7 @@ const SettingsComponent = (): JSX.Element => {
         currentVal={rotation}
         updateVal={setRotation}
       />
+      <Switch label="Invert" currentVal={invert} updateVal={setInvert} />
     </>
   );
 };
