@@ -14,7 +14,7 @@ import Superellipse from './geometry/Superellipse.tsx';
 import ArchimedianSpiral from './geometry/ArchimedianSpiral.tsx';
 import Star from './geometry/Star.tsx';
 import Spirangle from './geometry/Spirangle.tsx';
-import { downloadSVG } from './download.ts';
+import { downloadSVG, downloadPNG } from './download.ts';
 import {
   camera,
   centerCamera,
@@ -177,6 +177,7 @@ function App() {
         />
         {selectedShape().settingsComponent({})}
         <button onClick={downloadSVG}>Download SVG</button>
+        <button onClick={downloadPNG}>Download PNG</button>
         <a
           aria-label="View GitHub repository"
           id="repo-link"
