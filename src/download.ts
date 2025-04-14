@@ -1,22 +1,22 @@
 const SVGNS = 'http://www.w3.org/2000/svg';
 
 type CellParsed = {
-  x: number,
-  y: number
-}
+  x: number;
+  y: number;
+};
 
 type SvgData = {
-  svg: SVGSVGElement,
-  minX: number,
-  minY: number,
-  maxX: number,
-  maxY: number,
-  width: number,
-  height: number,
-  cellsParsed: CellParsed[],
-  cellsPositive: CellParsed[],
-  fileName: string
-}
+  svg: SVGSVGElement;
+  minX: number;
+  minY: number;
+  maxX: number;
+  maxY: number;
+  width: number;
+  height: number;
+  cellsParsed: CellParsed[];
+  cellsPositive: CellParsed[];
+  fileName: string;
+};
 
 const getSvgData = (): SvgData => {
   const svg = document
@@ -24,24 +24,20 @@ const getSvgData = (): SvgData => {
     .cloneNode(true) as SVGSVGElement;
   svg.removeAttribute('data-layer-name');
 
-  const cellsParsed = [...svg.querySelectorAll('rect')].map(
-    (cell) => ({
-      x: Number(cell.getAttribute('x')),
-      y: Number(cell.getAttribute('y'))
-    })
-  );
+  const cellsParsed = [...svg.querySelectorAll('rect')].map((cell) => ({
+    x: Number(cell.getAttribute('x')),
+    y: Number(cell.getAttribute('y')),
+  }));
 
   const minX = Math.min(...cellsParsed.map((cell) => cell.x));
   const minY = Math.min(...cellsParsed.map((cell) => cell.y));
   const maxX = Math.max(...cellsParsed.map((cell) => cell.x));
   const maxY = Math.max(...cellsParsed.map((cell) => cell.y));
 
-  const cellsPositive = cellsParsed.map(
-    (cell) => ({
-      x: cell.x + Math.abs(minX),
-      y: cell.y + Math.abs(minY)
-    })
-  );
+  const cellsPositive = cellsParsed.map((cell) => ({
+    x: cell.x + Math.abs(minX),
+    y: cell.y + Math.abs(minY),
+  }));
 
   const fileName = [...document.querySelectorAll('input, select')]
     .map((elem) => (elem as HTMLInputElement | HTMLSelectElement).value)
@@ -58,9 +54,9 @@ const getSvgData = (): SvgData => {
     maxY,
     height: maxY - minY + 1,
     width: maxX - minX + 1,
-    fileName
+    fileName,
   };
-}
+};
 
 const downloadBlob = (blob: Blob, fileName: string): void => {
   const a = document.createElement('a');
@@ -69,7 +65,7 @@ const downloadBlob = (blob: Blob, fileName: string): void => {
   a.download = fileName;
   a.click();
   URL.revokeObjectURL(url);
-}
+};
 
 const downloadSVG = (): void => {
   const { svg, minX, minY, maxX, maxY, width, height, fileName } = getSvgData();
@@ -124,6 +120,6 @@ const downloadPNG = (): void => {
 
     downloadBlob(blob, fileName);
   });
-}
+};
 
 export { downloadSVG, downloadPNG };
