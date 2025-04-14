@@ -13,7 +13,6 @@ type SvgData = {
   maxY: number;
   width: number;
   height: number;
-  cellsParsed: CellParsed[];
   cellsPositive: CellParsed[];
   fileName: string;
 };
