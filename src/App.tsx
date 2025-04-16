@@ -17,6 +17,7 @@ import Spirangle from './geometry/Spirangle.tsx';
 import { downloadSVG, downloadPNG } from './download.ts';
 import {
   camera,
+  panCamera,
   centerCamera,
   changeZoom,
   MIN_ZOOM,
@@ -56,10 +57,19 @@ function App() {
   onMount(() => {
     const mountStartTime = performance.now();
     const updateOutputSize = (): void => {
+      if (!outputContainer) return;
+
+      // preserve camera center on resize
+      panCamera(
+        (outputSize().width - outputContainer.offsetWidth) / 2,
+        (outputSize().height - outputContainer.offsetHeight) / 2
+      );
+
       setOutputSize({
-        width: outputContainer!.offsetWidth,
-        height: outputContainer!.offsetHeight,
+        width: outputContainer.offsetWidth,
+        height: outputContainer.offsetHeight,
       });
+
       const delta = performance.now() - mountStartTime;
       if (delta < 500) centerCamera();
     };
