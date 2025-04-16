@@ -176,8 +176,10 @@ function App() {
           extractOptionLabel={(shape) => shape.name}
         />
         {selectedShape().settingsComponent({})}
-        <button onClick={downloadSVG}>Download SVG</button>
-        <button onClick={downloadPNG}>Download PNG</button>
+        <div id="download-buttons">
+          <button onClick={downloadSVG}>Download SVG</button>
+          <button onClick={downloadPNG}>Download PNG</button>
+        </div>
         <a
           aria-label="View GitHub repository"
           id="repo-link"

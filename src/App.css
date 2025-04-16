@@ -173,6 +173,13 @@ button {
   overscroll-behavior: contain;
 }
 
+#download-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
 @media (orientation: landscape) {
   #root {
     flex-direction: row;
