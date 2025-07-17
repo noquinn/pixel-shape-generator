@@ -80,14 +80,14 @@ const SettingsComponent = (): JSX.Element => {
       <Slider
         label="Width"
         min={4}
-        max={200}
+        max={500}
         currentVal={width}
         updateVal={setWidth}
       />
       <Slider
         label="Height"
         min={4}
-        max={200}
+        max={500}
         currentVal={height}
         updateVal={setHeight}
       />

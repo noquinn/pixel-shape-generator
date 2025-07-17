@@ -61,7 +61,7 @@ const SettingsComponent = (): JSX.Element => {
       <Slider
         label="Diameter"
         min={10}
-        max={200}
+        max={500}
         currentVal={diameter}
         updateVal={setDiameter}
       />
