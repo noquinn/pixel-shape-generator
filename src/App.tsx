@@ -6,7 +6,9 @@ import {
   For,
   Show,
 } from 'solid-js';
+
 import type { Shape } from './types';
+
 import Rectangle from './geometry/Rectangle.tsx';
 import RegularPolygon from './geometry/RegularPolygon.tsx';
 import ReuleauxPolygon from './geometry/ReuleauxPolygon.tsx';
@@ -14,6 +16,8 @@ import Superellipse from './geometry/Superellipse.tsx';
 import ArchimedianSpiral from './geometry/ArchimedianSpiral.tsx';
 import Star from './geometry/Star.tsx';
 import Spirangle from './geometry/Spirangle.tsx';
+import Circle from './geometry/Circle.tsx';
+
 import { downloadSVG, downloadPNG } from './download.ts';
 import {
   camera,
@@ -50,6 +54,7 @@ function App() {
     Star,
     Spirangle,
     Rectangle,
+    Circle,
   ];
 
   const [selectedShape, setSelectedShape] = createSignal<Shape>(shapes[0]);
