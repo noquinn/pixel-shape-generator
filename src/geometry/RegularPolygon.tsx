@@ -24,19 +24,9 @@ const ShapeComponent = (): JSX.Element => {
   const verts = Array.from({ length: sides() }, (_, i) => calculateVertex(i));
   return (
     <>
-      <For each={verts}>
-        {(_, i) => (
-          <CellLine
-            x1={verts[i()].x}
-            y1={verts[i()].y}
-            x2={verts[(i() + 1) % sides()].x}
-            y2={verts[(i() + 1) % sides()].y}
-          />
-        )}
-      </For>
       <Show when={showAngleBisectors()}>
         <For each={verts}>
-          {(v) => <CellLine x1={v.x} y1={v.y} x2={0} y2={0} />}
+          {(v) => <CellLine x1={v.x} y1={v.y} x2={0} y2={0} debug />}
         </For>
       </Show>
       <Show when={showPerpendicularBisectors()}>
@@ -47,10 +37,21 @@ const ShapeComponent = (): JSX.Element => {
               y1={(verts[i()].y + verts[(i() + 1) % sides()].y) / 2}
               x2={0}
               y2={0}
+              debug
             />
           )}
         </For>
       </Show>
+      <For each={verts}>
+        {(_, i) => (
+          <CellLine
+            x1={verts[i()].x}
+            y1={verts[i()].y}
+            x2={verts[(i() + 1) % sides()].x}
+            y2={verts[(i() + 1) % sides()].y}
+          />
+        )}
+      </For>
     </>
   );
 };

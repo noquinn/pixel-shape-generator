@@ -44,6 +44,22 @@ const ShapeComponent = (): JSX.Element => {
 
   return (
     <>
+      <Show when={showBounds()}>
+        <CellLine x1={left} y1={top} x2={right} y2={top} debug />
+        <CellLine x1={right} y1={top} x2={right} y2={bottom} debug />
+        <CellLine x1={right} y1={bottom} x2={left} y2={bottom} debug />
+        <CellLine x1={left} y1={bottom} x2={left} y2={top} debug />
+      </Show>
+      <Show when={showCenter()}>
+        <Show when={height() % 2 === 0}>
+          <CellLine x1={left} y1={1} x2={right} y2={1} debug />
+        </Show>
+        <Show when={width() % 2 === 0}>
+          <CellLine x1={1} y1={top} x2={1} y2={bottom} debug />
+        </Show>
+        <CellLine x1={0} y1={top} x2={0} y2={bottom} debug />
+        <CellLine x1={left} y1={0} x2={right} y2={0} debug />
+      </Show>
       <For each={points}>
         {(p) => (
           <>
@@ -54,22 +70,6 @@ const ShapeComponent = (): JSX.Element => {
           </>
         )}
       </For>
-      <Show when={showBounds()}>
-        <CellLine x1={left} y1={top} x2={right} y2={top} />
-        <CellLine x1={right} y1={top} x2={right} y2={bottom} />
-        <CellLine x1={right} y1={bottom} x2={left} y2={bottom} />
-        <CellLine x1={left} y1={bottom} x2={left} y2={top} />
-      </Show>
-      <Show when={showCenter()}>
-        <Show when={height() % 2 === 0}>
-          <CellLine x1={left} y1={1} x2={right} y2={1} />
-        </Show>
-        <Show when={width() % 2 === 0}>
-          <CellLine x1={1} y1={top} x2={1} y2={bottom} />
-        </Show>
-        <CellLine x1={0} y1={top} x2={0} y2={bottom} />
-        <CellLine x1={left} y1={0} x2={right} y2={0} />
-      </Show>
     </>
   );
 };
