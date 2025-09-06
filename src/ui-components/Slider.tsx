@@ -8,8 +8,10 @@ const Slider = ({
   step = 1,
   currentVal,
   updateVal,
+  description
 }: {
   label: string;
+  description?: string;
   min: number;
   max: number;
   step?: number;
@@ -41,6 +43,7 @@ const Slider = ({
           onInput={handleInput}
         />
       </div>
+      {description && <div class="slider-description">{description}</div>}
     </div>
   );
 };
