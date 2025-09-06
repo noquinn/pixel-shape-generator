@@ -43,7 +43,7 @@ const Slider = ({
           onInput={handleInput}
         />
       </div>
-      {description && <div class="slider-description">{description}</div>}
+      {description && <span class="slider-description">{description}</span>}
     </div>
   );
 };
