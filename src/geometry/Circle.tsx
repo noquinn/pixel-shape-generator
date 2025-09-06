@@ -3,7 +3,6 @@ import type { Shape } from '../types.d.ts';
 import CellCircle from './helpers/CellCircle.tsx';
 import Slider from '../ui-components/Slider.tsx';
 import Switch from '../ui-components/Switch.tsx';
-import CellLine from './helpers/CellLine.tsx';
 
 const [diameter, setDiameter] = createSignal(10);
 const [offsetRayon, setOffsetRayon] = createSignal(0);

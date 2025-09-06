@@ -1,5 +1,4 @@
 import { createSignal, JSX } from 'solid-js';
-import { pointer } from '../../pointer.ts';
 
 const Cell = (props: { x: number; y: number, debug?: boolean }): JSX.Element => {
   const [isHighlighted, setIsHighlighted] = createSignal(false);

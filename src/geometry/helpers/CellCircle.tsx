@@ -2,7 +2,7 @@
 // This file defines the CellCircle component and the Circle utility function for generating discrete circle points on a grid.
 // It is used to render circles by displaying individual cells at each calculated point.
 
-import { For } from 'solid-js';
+import { For, Show } from 'solid-js';
 import Cell from './Cell.tsx';
 import { Point } from '../../types';
 import CellLine from './CellLine.tsx';
