@@ -5,6 +5,7 @@
 import { For } from 'solid-js';
 import Cell from './Cell.tsx';
 import { Point } from '../../types';
+import CellLine from './CellLine.tsx';
 
 /**
  * Generates all points of a discrete circle centered at (cx, cy) with radius r.
@@ -62,6 +63,8 @@ const CellCircle = (props: {
     yOffset?: number;
     rOffset?: number;
     showGuide?: boolean;
+    showBounds?: boolean
+    showCenter?: boolean
   };
 }) => {
   const isEven = props.diameter % 2 === 0;
@@ -73,7 +76,15 @@ const CellCircle = (props: {
   let r = (props.diameter - 1) / 2;
 
   // 0.1 to avoid gaps on circle edge when diameter is small
-  r -= 0.1;
+  if (r > 2) {
+    r -= 0.1;
+  }
+  // For very small circles, increase radius to avoid gaps
+  else {
+    r += 0.1;
+  }
+
+
 
   // Center the circle on the grid for even diameters
   if (isEven) {
@@ -96,11 +107,34 @@ const CellCircle = (props: {
     }
   }
 
+  const left = props.x + xOffset - r;
+  const right = props.x + xOffset + r;
+  const top = props.y + yOffset - r;
+  const bottom = props.y + yOffset + r;
+
   const points = CircleShape(props.x + xOffset, props.y + yOffset, r, isEven);
 
   return (
     <>
+      <Show when={props.debug?.showBounds}>
+        <CellLine debug x1={left} y1={top} x2={right} y2={top} />
+        <CellLine debug x1={right} y1={top} x2={right} y2={bottom} />
+        <CellLine debug x1={right} y1={bottom} x2={left} y2={bottom} />
+        <CellLine debug x1={left} y1={bottom} x2={left} y2={top} />
+      </Show>
+      <Show when={props.debug?.showCenter}>
+        <Show when={isEven}>
+          <CellLine debug x1={left} y1={1} x2={right} y2={1} />
+        </Show>
+        <Show when={isEven}>
+          <CellLine debug x1={1} y1={top} x2={1} y2={bottom} />
+        </Show>
+        <CellLine debug x1={0} y1={top} x2={0} y2={bottom} />
+        <CellLine debug x1={left} y1={0} x2={right} y2={0} />
+      </Show>
+
       <For each={points}>{(c) => <Cell x={c.x} y={c.y} />}</For>
+
       {props.debug?.showGuide && (
         <circle
           cx={props.x + xOffset + 0.5}

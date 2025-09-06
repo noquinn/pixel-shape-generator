@@ -1,6 +1,7 @@
 import { createSignal, JSX } from 'solid-js';
+import { pointer } from '../../pointer.ts';
 
-const Cell = (props: { x: number; y: number }): JSX.Element => {
+const Cell = (props: { x: number; y: number, debug?: boolean }): JSX.Element => {
   const [isHighlighted, setIsHighlighted] = createSignal(false);
   return (
     <rect
@@ -9,7 +10,7 @@ const Cell = (props: { x: number; y: number }): JSX.Element => {
       y={props.y}
       width="1"
       height="1"
-      classList={{ cell: true, highlighted: isHighlighted() }}
+      classList={{ cell: true, debug: props.debug, highlighted: isHighlighted() }}
     />
   );
 };

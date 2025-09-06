@@ -17,6 +17,7 @@ import ArchimedianSpiral from './geometry/ArchimedianSpiral.tsx';
 import Star from './geometry/Star.tsx';
 import Spirangle from './geometry/Spirangle.tsx';
 import Circle from './geometry/Circle.tsx';
+import Ellipse from './geometry/Ellipse.tsx';
 
 import { downloadSVG, downloadPNG } from './download.ts';
 import {
@@ -55,6 +56,7 @@ function App() {
     Spirangle,
     Rectangle,
     Circle,
+    Ellipse,
   ];
 
   const [selectedShape, setSelectedShape] = createSignal<Shape>(shapes[0]);

@@ -2,6 +2,8 @@
   --backdrop-color: #fff;
   --cell-color: #5cceee;
   --cell-highlight-color: #a33111;
+  --cell-debug-color: #eee75c;
+  --cell-debug-highlight-color: #ea7b21;
   --grid-line-color: #d4d4d4;
   --text-color: #000;
   --ui-background-color: #fdfdfd;
@@ -16,6 +18,8 @@
     --backdrop-color: rgb(9 9 11);
     --cell-color: #1186a6;
     --cell-highlight-color: #942c10;
+    --cell-debug-color: #8e8e0e;
+    --cell-debug-highlight-color: #875310;
     --grid-line-color: #2f2f2f;
     --text-color: #dadada;
     --ui-background-color: rgb(24 24 27);
@@ -88,10 +92,16 @@ body {
   fill: var(--cell-color);
 }
 
+.cell.debug {
+  fill: var(--cell-debug-color);
+}
+
 rect.highlighted {
   fill: var(--cell-highlight-color);
-  /* fill: url(#highlight-pattern); */
-  /* mask: url(#highlight-mask); */
+}
+
+.cell.debug.highlighted {
+    fill: var(--cell-debug-highlight-color);
 }
 
 .grid-line {
