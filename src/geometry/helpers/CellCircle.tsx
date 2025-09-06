@@ -76,7 +76,15 @@ const CellCircle = (props: {
   let r = (props.diameter - 1) / 2;
 
   // 0.1 to avoid gaps on circle edge when diameter is small
-  r -= 0.1;
+  if (r > 2) {
+    r -= 0.1;
+  }
+  // For very small circles, increase radius to avoid gaps
+  else {
+    r += 0.1;
+  }
+
+
 
   // Center the circle on the grid for even diameters
   if (isEven) {
@@ -108,24 +116,24 @@ const CellCircle = (props: {
 
   return (
     <>
-      <For each={points}>{(c) => <Cell x={c.x} y={c.y} />}</For>
-
       <Show when={props.debug?.showBounds}>
-        <CellLine x1={left} y1={top} x2={right} y2={top} />
-        <CellLine x1={right} y1={top} x2={right} y2={bottom} />
-        <CellLine x1={right} y1={bottom} x2={left} y2={bottom} />
-        <CellLine x1={left} y1={bottom} x2={left} y2={top} />
+        <CellLine debug x1={left} y1={top} x2={right} y2={top} />
+        <CellLine debug x1={right} y1={top} x2={right} y2={bottom} />
+        <CellLine debug x1={right} y1={bottom} x2={left} y2={bottom} />
+        <CellLine debug x1={left} y1={bottom} x2={left} y2={top} />
       </Show>
       <Show when={props.debug?.showCenter}>
         <Show when={isEven}>
-          <CellLine x1={left} y1={1} x2={right} y2={1} />
+          <CellLine debug x1={left} y1={1} x2={right} y2={1} />
         </Show>
         <Show when={isEven}>
-          <CellLine x1={1} y1={top} x2={1} y2={bottom} />
+          <CellLine debug x1={1} y1={top} x2={1} y2={bottom} />
         </Show>
-        <CellLine x1={0} y1={top} x2={0} y2={bottom} />
-        <CellLine x1={left} y1={0} x2={right} y2={0} />
+        <CellLine debug x1={0} y1={top} x2={0} y2={bottom} />
+        <CellLine debug x1={left} y1={0} x2={right} y2={0} />
       </Show>
+
+      <For each={points}>{(c) => <Cell x={c.x} y={c.y} />}</For>
 
       {props.debug?.showGuide && (
         <circle

@@ -6,6 +6,7 @@ const CellLine = (props: {
   y1: number;
   x2: number;
   y2: number;
+  debug?: boolean;
 }) => {
   const dx = props.x2 - props.x1;
   const dy = props.y2 - props.y1;
@@ -16,6 +17,7 @@ const CellLine = (props: {
     <For each={Array.from({ length: steps + 1 })}>
       {(_, i) => (
         <Cell
+          debug={props.debug}
           x={Math.round(props.x1 + sx * i())}
           y={Math.round(props.y1 + sy * i())}
         />
