@@ -43,6 +43,7 @@ import {
 import Select from './ui-components/Select.tsx';
 import './App.css';
 import permaLink from './permaLink.ts';
+import MagicLink from './ui-components/MagicLink.tsx';
 
 let outputContainer: HTMLDivElement | undefined;
 const [outputSize, setOutputSize] = createSignal({ width: 0, height: 0 });
@@ -124,6 +125,8 @@ function App() {
   // set up effect to save state to URL on change
   createEffect(permaLink.saveToUrl);
 
+
+
   return (
     <>
       <div
@@ -178,6 +181,7 @@ function App() {
         </svg>
         <div id="zoom-controls">
           <button
+            class="button"
             aria-label="Zoom in"
             disabled={camera().zoom === MAX_ZOOM}
             onClick={() => changeZoom(0.8)}
@@ -185,6 +189,7 @@ function App() {
             +
           </button>
           <button
+            class="button"
             aria-label="Zoom out"
             disabled={camera().zoom === MIN_ZOOM}
             onClick={() => changeZoom(1.2)}
@@ -202,18 +207,30 @@ function App() {
         </span>
       </div>
       <div id="settings-container" aria-label="Shape Settings">
-        <Select
-          label="Shape"
-          selectedOption={selectedShape}
-          updateSelectedOption={setSelectedShape}
-          options={shapes.sort((a, b) => a.name.localeCompare(b.name))}
-          extractOptionValue={(shape) => shape.name}
-          extractOptionLabel={(shape) => shape.name}
-        />
+        <div class="main-settings">
+          <Select
+            label="Shape"
+            selectedOption={selectedShape}
+            updateSelectedOption={setSelectedShape}
+            options={shapes.sort((a, b) => a.name.localeCompare(b.name))}
+            extractOptionValue={(shape) => shape.name}
+            extractOptionLabel={(shape) => shape.name}
+          />
+          <MagicLink
+            href={permaLink.rawUrl}
+            label="Permalink" labelWhenClicked="Copied"
+            width="70px"
+          />
+
+        </div>
         {selectedShape().settingsComponent({})}
         <div id="download-buttons">
-          <button onClick={downloadSVG}>Download SVG</button>
-          <button onClick={downloadPNG}>Download PNG</button>
+          <button class="button" onClick={downloadSVG}>
+            Download SVG
+          </button>
+          <button class="button" onClick={downloadPNG}>
+            Download PNG
+          </button>
         </div>
         <a
           aria-label="View GitHub repository"

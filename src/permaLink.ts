@@ -1,18 +1,15 @@
 import { createMutable } from 'solid-js/store';
+import { createSignal } from 'solid-js';
+
+const [url, setUrl] = createSignal(window.location.href);
 
 /**
  * Utility object for managing URL query parameters and shape state for permalinks.
  * Provides methods to read, write, and synchronize shape and parameter data with the browser URL.
  */
 const PermaLink = {
-  /**
-   * Updates the browser URL's query parameters with the provided entries.
-   * All previous search parameters are removed before setting new ones.
-   * @param entries - Key/value pairs to set as query parameters.
-   */
-  setQueryParams(entries: Record<string, string>) {
+  generateURL(entries: Record<string, string>) {
     const url = new URL(window.location.href);
-
     // Remove all searchParams
     url.search = '';
 
@@ -21,10 +18,12 @@ const PermaLink = {
       url.searchParams.set(key, value);
     });
 
-    history.pushState({}, '', url);
+    return url.toString();
   },
 
   timeout: null as ReturnType<typeof setTimeout> | null,
+
+  rawUrl: url,
 
   /**
    * Saves the current shape and parameters to the browser URL as query parameters.
@@ -37,10 +36,14 @@ const PermaLink = {
       params['shape'] = PermaLink.getShape();
     }
 
+    const rawUrl = PermaLink.generateURL(params);
+
+    setUrl(rawUrl);
+
     // debounce URL updates to avoid excessive history entries
     if (PermaLink.timeout) clearTimeout(PermaLink.timeout);
     PermaLink.timeout = setTimeout(() => {
-      PermaLink.setQueryParams(params);
+      history.pushState({}, '', rawUrl);
     }, 500)
   },
 
