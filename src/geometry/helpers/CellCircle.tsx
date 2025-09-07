@@ -20,7 +20,7 @@ function CircleShape(
   cx: number,
   cy: number,
   r: number,
-  isEvent: boolean = false,
+  isEvent: boolean = false
 ): Point[] {
   const points: Point[] = [];
 
@@ -63,8 +63,8 @@ const CellCircle = (props: {
     yOffset?: number;
     rOffset?: number;
     showGuide?: boolean;
-    showBounds?: boolean
-    showCenter?: boolean
+    showBounds?: boolean;
+    showCenter?: boolean;
   };
 }) => {
   const isEven = props.diameter % 2 === 0;
@@ -83,8 +83,6 @@ const CellCircle = (props: {
   else {
     r += 0.1;
   }
-
-
 
   // Center the circle on the grid for even diameters
   if (isEven) {

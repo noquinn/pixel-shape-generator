@@ -101,7 +101,7 @@ rect.highlighted {
 }
 
 .cell.debug.highlighted {
-    fill: var(--cell-debug-highlight-color);
+  fill: var(--cell-debug-highlight-color);
 }
 
 .grid-line {

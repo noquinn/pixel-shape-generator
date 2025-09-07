@@ -8,7 +8,7 @@ const Slider = ({
   step = 1,
   currentVal,
   updateVal,
-  description
+  description,
 }: {
   label: string;
   description?: string;
