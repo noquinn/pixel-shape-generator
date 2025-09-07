@@ -42,6 +42,17 @@ import {
 import Select from './ui-components/Select.tsx';
 import './App.css';
 
+function debounce<T extends (...args: any[]) => any>(
+  fn: T,
+  ms: number
+): (...args: Parameters<T>) => void {
+  let timeoutId: ReturnType<typeof setTimeout>;
+  return (...args: Parameters<T>) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => fn(...args), ms);
+  };
+}
+
 let outputContainer: HTMLDivElement | undefined;
 const [outputSize, setOutputSize] = createSignal({ width: 0, height: 0 });
 
@@ -58,6 +69,63 @@ function App() {
   ];
 
   const [selectedShape, setSelectedShape] = createSignal<Shape>(shapes[0]);
+
+  const [cellCount, setCellCount] = createSignal(0);
+  const [isCountingCells, setIsCountingCells] = createSignal(false);
+
+  // debounced cell counting on shape renders
+  onMount(() => {
+    const getNumberUniqueCells = (): number => {
+      const cells = document.getElementsByClassName('cell');
+      const uniqueCells = new Set<string>();
+      for (const cell of cells) {
+        const x = cell.getAttribute('x');
+        const y = cell.getAttribute('y');
+        uniqueCells.add(`${x},${y}`);
+      }
+      return uniqueCells.size;
+    };
+
+    const updateCellCount = debounce(() => {
+      setCellCount(getNumberUniqueCells());
+      setIsCountingCells(false);
+    }, 500);
+
+    const observer = new MutationObserver((mutations) => {
+      const includesCellNode = (nodes: NodeList): boolean => {
+        for (const node of nodes) {
+          if (node instanceof SVGRectElement) return true;
+        }
+        return false;
+      };
+
+      for (const mutation of mutations) {
+        if (
+          mutation.type === 'childList' &&
+          (includesCellNode(mutation.addedNodes) ||
+            includesCellNode(mutation.removedNodes))
+        ) {
+          setIsCountingCells(true);
+          updateCellCount();
+          break;
+        }
+      }
+    });
+
+    const cellsContainer = document.querySelector(
+      'svg[data-layer-name="cells"]'
+    );
+    if (cellsContainer) {
+      observer.observe(cellsContainer, {
+        childList: true,
+        subtree: false,
+        attributes: false,
+      });
+    }
+
+    setCellCount(getNumberUniqueCells());
+    onCleanup(() => observer.disconnect());
+  });
 
   onMount(() => {
     const mountStartTime = performance.now();
@@ -177,6 +245,9 @@ function App() {
             ({pointer().cell!.x}, {pointer().cell!.y})
           </span>
         </Show>
+        <span id="cell-count" style={{ opacity: isCountingCells() ? 0.2 : 1 }}>
+          {cellCount()} cell{cellCount() === 1 ? '' : 's'}
+        </span>
         <span id="scale" style={{ opacity: scale() > 1 ? 1 : 0 }}>
           1∶{scale()}
         </span>

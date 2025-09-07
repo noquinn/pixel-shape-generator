@@ -172,6 +172,17 @@ button {
   pointer-events: none;
 }
 
+#cell-count {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 4px;
+  line-height: 16px;
+  font-size: 16px;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
 #settings-container {
   display: flex;
   flex-direction: column;
