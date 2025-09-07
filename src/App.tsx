@@ -60,7 +60,7 @@ function App() {
     Circle,
   ];
 
-  const [selectedShape, setSelectedShape] = createSignal<Shape>(shapes[0]);
+  const [selectedShape, setSelectedShape] = createSignal<Shape|null>(null);
 
   onMount(() => {
     const mountStartTime = performance.now();
@@ -113,19 +113,22 @@ function App() {
     permaLink.loadFromUrl();
 
     const defaultShape = permaLink.getShape();
-    if (!defaultShape) return;
+    if (!defaultShape) {
+      setSelectedShape(shapes[0]);
+    }
 
     // find shape by name and set as selected
     const shape = shapes.find((s) => s.name === defaultShape);
     if (shape) {
       setSelectedShape(shape);
+      return;
     }
+
+    setSelectedShape(shapes[0]);
   });
 
   // set up effect to save state to URL on change
   createEffect(permaLink.saveToUrl);
-
-
 
   return (
     <>
@@ -148,7 +151,7 @@ function App() {
           height={outputSize().height}
           viewBox={`${camera().position.x * camera().zoom} ${camera().position.y * camera().zoom} ${camera().zoom * outputSize().width} ${camera().zoom * outputSize().height}`}
         >
-          {selectedShape().shapeComponent({})}
+          {selectedShape()?.shapeComponent({})}
         </svg>
         <svg
           data-layer-name="grid"
@@ -213,8 +216,8 @@ function App() {
             selectedOption={selectedShape}
             updateSelectedOption={setSelectedShape}
             options={shapes.sort((a, b) => a.name.localeCompare(b.name))}
-            extractOptionValue={(shape) => shape.name}
-            extractOptionLabel={(shape) => shape.name}
+            extractOptionValue={(shape) => shape?.name}
+            extractOptionLabel={(shape) => shape?.name}
           />
           <MagicLink
             href={permaLink.rawUrl}
@@ -223,7 +226,7 @@ function App() {
           />
 
         </div>
-        {selectedShape().settingsComponent({})}
+        {selectedShape()?.settingsComponent({})}
         <div id="download-buttons">
           <button class="button" onClick={downloadSVG}>
             Download SVG
