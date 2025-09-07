@@ -22,7 +22,7 @@ function CircleShape(
   cy: number,
   r: number,
   thick: number = 1,
-  isEvent: boolean = false,
+  isEvent: boolean = false
 ): Point[] {
   const points: Point[] = [];
 
@@ -45,8 +45,8 @@ function CircleShape(
   const xOffset = isEvent ? 0.5 : 0;
 
   // Draw each circle layer for thickness
-  for (let t = 0; t < thick-0.5; t += 0.5) {
-    const rt = r - t;
+  for (let t = 0; t < thick * 2 - 1; t++) {
+    const rt = r - t / 2;
 
     for (let x = xOffset; x < rt; x++) {
       const py = rt * rt - x * x;
@@ -125,7 +125,13 @@ const CellCircle = (props: {
   const top = props.y + yOffset - r;
   const bottom = props.y + yOffset + r;
 
-  const points = CircleShape(props.x + xOffset, props.y + yOffset, r, props.thickness, isEven);
+  const points = CircleShape(
+    props.x + xOffset,
+    props.y + yOffset,
+    r,
+    props.thickness,
+    isEven
+  );
 
   return (
     <>

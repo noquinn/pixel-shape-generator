@@ -103,7 +103,7 @@ rect.highlighted {
 }
 
 .cell.debug.highlighted {
-    fill: var(--cell-debug-highlight-color);
+  fill: var(--cell-debug-highlight-color);
 }
 
 .grid-line {
@@ -219,7 +219,7 @@ rect.highlighted {
 }
 
 .main-settings {
-    display: flex;
-    gap: 16px;
-    margin-bottom: 16px;
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
 }

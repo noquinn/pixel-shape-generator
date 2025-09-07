@@ -17,19 +17,19 @@ const Switch = (props: {
   const id = `${props.label.toLowerCase().replace(/\s+/g, '-')}-toggle`;
 
   onMount(() => {
-    const paramVal = permaLink.getParamBoolean(id)
+    const paramVal = permaLink.getParamBoolean(id);
     if (paramVal !== null) {
-      props.updateVal(paramVal)
+      props.updateVal(paramVal);
     }
 
     createEffect(() => {
-      permaLink.setParamBoolean(id, props.currentVal())
-    })
-  })
+      permaLink.setParamBoolean(id, props.currentVal());
+    });
+  });
 
   onCleanup(() => {
-    permaLink.clearParam(id)
-  })
+    permaLink.clearParam(id);
+  });
 
   const handleInput: JSX.EventHandler<HTMLInputElement, InputEvent> = (
     event
@@ -47,7 +47,9 @@ const Switch = (props: {
         value={Number(props.currentVal())}
         onInput={handleInput}
       />
-      <label class="switch-label" for={id}>{props.label}</label>
+      <label class="switch-label" for={id}>
+        {props.label}
+      </label>
     </div>
   );
 };

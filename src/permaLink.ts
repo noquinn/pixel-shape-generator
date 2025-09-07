@@ -44,7 +44,7 @@ const PermaLink = {
     if (PermaLink.timeout) clearTimeout(PermaLink.timeout);
     PermaLink.timeout = setTimeout(() => {
       history.pushState({}, '', rawUrl);
-    }, 500)
+    }, 500);
   },
 
   /**

@@ -1,4 +1,11 @@
-import  { JSX, Accessor, Setter, createEffect, onMount, onCleanup } from 'solid-js';
+import {
+  JSX,
+  Accessor,
+  Setter,
+  createEffect,
+  onMount,
+  onCleanup,
+} from 'solid-js';
 import './Slider.css';
 import permaLink from '../permaLink.ts';
 
@@ -9,7 +16,7 @@ const Slider = ({
   step = 1,
   currentVal,
   updateVal,
-  description
+  description,
 }: {
   label: string;
   description?: string;
@@ -22,19 +29,19 @@ const Slider = ({
   const id = `${label.toLowerCase().replace(/\s+/g, '-')}-input`;
 
   onMount(() => {
-    const paramVal = permaLink.getParamNumber(id)
+    const paramVal = permaLink.getParamNumber(id);
     if (paramVal !== null) {
-      updateVal(paramVal)
+      updateVal(paramVal);
     }
 
     createEffect(() => {
-      permaLink.setParam(id, currentVal().toString())
-    })
-  })
+      permaLink.setParam(id, currentVal().toString());
+    });
+  });
 
   onCleanup(() => {
-    permaLink.clearParam(id)
-  })
+    permaLink.clearParam(id);
+  });
 
   const handleInput: JSX.EventHandler<HTMLInputElement, InputEvent> = (event) =>
     updateVal(Number(event.currentTarget.value));

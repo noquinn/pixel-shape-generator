@@ -60,7 +60,7 @@ function App() {
     Circle,
   ];
 
-  const [selectedShape, setSelectedShape] = createSignal<Shape|null>(null);
+  const [selectedShape, setSelectedShape] = createSignal<Shape | null>(null);
 
   onMount(() => {
     const mountStartTime = performance.now();
@@ -221,10 +221,10 @@ function App() {
           />
           <CopyLink
             href={permaLink.rawUrl}
-            label="Permalink" labelWhenClicked="Copied"
+            label="Permalink"
+            labelWhenClicked="Copied"
             width="70px"
           />
-
         </div>
         {selectedShape()?.settingsComponent({})}
         <div id="download-buttons">

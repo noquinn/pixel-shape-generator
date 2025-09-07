@@ -48,10 +48,10 @@ const SettingsComponent = (): JSX.Element => {
       <Slider
         label="Thickness"
         min={1}
-        max={20}
+        max={10}
         currentVal={thickness}
         updateVal={setThickness}
-        description={"High thickness with high diameter can cause long render"}
+        description={'High thickness with high diameter can cause long render'}
       />
       <Switch
         label="Show Advanced Settings"
