@@ -1,7 +1,6 @@
-import permaLink from '../permaLink.ts';
 import { Accessor, createSignal } from 'solid-js';
 
-const MagicLink = (props: {
+const CopyLink = (props: {
   href: Accessor<string>;
   label: string;
   labelWhenClicked: string;
@@ -9,20 +8,27 @@ const MagicLink = (props: {
 }) => {
   const onClick = (e: PointerEvent) => {
     // Only handle left click (usually button 0) to open the link with middle click or right click context menu
-    if (e.button === 0) {
-      e.preventDefault();
-      navigator.clipboard.writeText(e.currentTarget.href).then(() => {
-        setClicked(true);
-        setTimeout(() => setClicked(false), 1000);
-      });
-    }
+    if (e.button !== 0) return;
+    e.preventDefault();
+
+    const anchor = e.currentTarget as HTMLAnchorElement;
+    if (!anchor?.href) return;
+
+    navigator.clipboard.writeText(anchor.href).then(() => {
+      setClicked(true);
+      setTimeout(() => setClicked(false), 1000);
+    });
   };
 
   const [clicked, setClicked] = createSignal(false);
 
   return (
     <a
-      style={{ 'padding-top': '12px', width: props.width ?? 'auto', 'text-align': 'center' }}
+      style={{
+        'padding-top': '12px',
+        width: props.width ?? 'auto',
+        'text-align': 'center',
+      }}
       className="button"
       onClick={onClick}
       href={props.href()}
@@ -32,4 +38,4 @@ const MagicLink = (props: {
   );
 };
 
-export default MagicLink;
+export default CopyLink;

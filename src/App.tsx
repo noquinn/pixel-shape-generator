@@ -43,7 +43,7 @@ import {
 import Select from './ui-components/Select.tsx';
 import './App.css';
 import permaLink from './permaLink.ts';
-import MagicLink from './ui-components/MagicLink.tsx';
+import CopyLink from './ui-components/CopyLink.tsx';
 
 let outputContainer: HTMLDivElement | undefined;
 const [outputSize, setOutputSize] = createSignal({ width: 0, height: 0 });
@@ -219,7 +219,7 @@ function App() {
             extractOptionValue={(shape) => shape?.name}
             extractOptionLabel={(shape) => shape?.name}
           />
-          <MagicLink
+          <CopyLink
             href={permaLink.rawUrl}
             label="Permalink" labelWhenClicked="Copied"
             width="70px"
