@@ -9,6 +9,7 @@
   --ui-background-color: #fdfdfd;
   --ui-border-color: #d1d5db;
   --ui-void-color: #d0d4de;
+  --ui-shadow-color: rgba(0, 0, 0, 0.2);
   --github-mark: url('/github-mark.svg');
   --ui-border-radius: 8px;
 }
@@ -25,6 +26,7 @@
     --ui-background-color: rgb(24 24 27);
     --ui-border-color: #606060;
     --ui-void-color: #4e4e4e;
+    --ui-shadow-color: rgba(255, 255, 255, 0.4);
     --github-mark: url('/github-mark-white.svg');
   }
 }
@@ -101,7 +103,7 @@ rect.highlighted {
 }
 
 .cell.debug.highlighted {
-    fill: var(--cell-debug-highlight-color);
+  fill: var(--cell-debug-highlight-color);
 }
 
 .grid-line {
@@ -119,11 +121,12 @@ rect.highlighted {
   transition: opacity 0.2s;
 }
 
-button:hover {
+.button:hover {
   touch-action: manipulation;
+  box-shadow: 0 0 2px var(--ui-shadow-color);
 }
 
-button {
+.button {
   width: fit-content;
   padding: 10px;
   border: 1px solid var(--ui-border-color);
@@ -143,7 +146,7 @@ button {
   margin: 16px;
 }
 
-#zoom-controls > button {
+#zoom-controls > .button {
   margin: 0;
   padding: 4px 10px;
   border: 1px solid var(--ui-border-color);
@@ -153,12 +156,12 @@ button {
   color: var(--text-color);
 }
 
-#zoom-controls > button:first-child {
+#zoom-controls > .button:first-child {
   border-bottom-width: 0;
   border-radius: var(--ui-border-radius) var(--ui-border-radius) 0 0;
 }
 
-#zoom-controls > button:last-child {
+#zoom-controls > .button:last-child {
   border-radius: 0 0 var(--ui-border-radius) var(--ui-border-radius);
 }
 
@@ -213,4 +216,10 @@ button {
     border-width: 1px 0 1px 0;
     border-radius: 0;
   }
+}
+
+.main-settings {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
 }

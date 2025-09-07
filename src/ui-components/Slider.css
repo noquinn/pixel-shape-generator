@@ -16,8 +16,8 @@
 }
 
 .slider-description {
-    margin-top: 8px;
-    font-size: 14px;
+  margin-top: 8px;
+  font-size: 14px;
 }
 
 .slider {
@@ -46,4 +46,8 @@
   appearance: none;
   background-color: var(--cell-color);
   box-shadow: none;
+}
+
+.slider:hover {
+  box-shadow: 0 0 2px var(--ui-shadow-color);
 }

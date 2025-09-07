@@ -1,17 +1,42 @@
-import type { JSX, Accessor, Setter } from 'solid-js';
+import {
+  JSX,
+  Accessor,
+  Setter,
+  onMount,
+  createEffect,
+  onCleanup,
+} from 'solid-js';
 import './Switch.css';
+import permaLink from '../permaLink.ts';
 
 const Switch = (props: {
   label: string;
   currentVal: Accessor<boolean>;
   updateVal: Setter<boolean>;
 }) => {
+  const id = `${props.label.toLowerCase().replace(/\s+/g, '-')}-toggle`;
+
+  onMount(() => {
+    const paramVal = permaLink.getParamBoolean(id);
+    if (paramVal !== null) {
+      props.updateVal(paramVal);
+    }
+
+    createEffect(() => {
+      permaLink.setParamBoolean(id, props.currentVal());
+    });
+  });
+
+  onCleanup(() => {
+    permaLink.clearParam(id);
+  });
+
   const handleInput: JSX.EventHandler<HTMLInputElement, InputEvent> = (
     event
   ) => {
     props.updateVal(event.currentTarget.checked);
   };
-  const id = `${props.label.replace(/\s+/, '-')}-toggle`;
+
   return (
     <div class="switch-container">
       <input
@@ -22,7 +47,9 @@ const Switch = (props: {
         value={Number(props.currentVal())}
         onInput={handleInput}
       />
-      <label for={id}>{props.label}</label>
+      <label class="switch-label" for={id}>
+        {props.label}
+      </label>
     </div>
   );
 };

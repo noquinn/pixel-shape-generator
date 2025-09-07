@@ -1,6 +1,7 @@
 import { For } from 'solid-js';
 import type { Accessor, Setter } from 'solid-js';
 import './Select.css';
+import permaLink from '../permaLink.ts';
 
 const Select = (props: {
   label: string;
@@ -12,13 +13,20 @@ const Select = (props: {
 }) => {
   const handleInput = (event: Event) => {
     const selectedOptionVal = (event.currentTarget as HTMLSelectElement).value;
+
+    // update permaLink shape
+    permaLink.setShape(selectedOptionVal);
+
+    // rename windows title
+    document.title = `Pixel Shape Generator - ${selectedOptionVal}`;
+
     props.updateSelectedOption(
       props.options.find(
         (option) => props.extractOptionValue(option) === selectedOptionVal
       )
     );
   };
-  const id = `${props.label.replace(/\s+/, '-')}-select`;
+  const id = `${props.label.replace(/\s+/g, '-')}-select`;
   return (
     <div class="select-container">
       <label for={id}>{props.label}</label>

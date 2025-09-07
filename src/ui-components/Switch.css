@@ -26,6 +26,10 @@
   transition: all 100ms ease-in-out;
 }
 
+.switch:hover::after {
+  box-shadow: 0 0 4px var(--ui-shadow-color);
+}
+
 .switch:checked {
   background-color: var(--cell-color);
 }
@@ -39,4 +43,8 @@
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.switch-label {
+  cursor: pointer;
 }

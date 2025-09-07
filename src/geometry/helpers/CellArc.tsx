@@ -17,7 +17,11 @@ const CellArc = (props: {
       y: Math.round(props.y + props.radius * Math.sin(i)),
     });
   }
-  return <For each={coords}>{(c) => <Cell x={c.x} y={c.y} debug={props.debug} />}</For>;
+  return (
+    <For each={coords}>
+      {(c) => <Cell x={c.x} y={c.y} debug={props.debug} />}
+    </For>
+  );
 };
 
 export default CellArc;

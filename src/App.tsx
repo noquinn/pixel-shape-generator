@@ -5,6 +5,7 @@ import {
   onMount,
   For,
   Show,
+  createEffect,
 } from 'solid-js';
 
 import type { Shape } from './types';
@@ -41,6 +42,8 @@ import {
 } from './pointer.ts';
 import Select from './ui-components/Select.tsx';
 import './App.css';
+import permaLink from './permaLink.ts';
+import CopyLink from './ui-components/CopyLink.tsx';
 
 let outputContainer: HTMLDivElement | undefined;
 const [outputSize, setOutputSize] = createSignal({ width: 0, height: 0 });
@@ -57,7 +60,7 @@ function App() {
     Circle,
   ];
 
-  const [selectedShape, setSelectedShape] = createSignal<Shape>(shapes[0]);
+  const [selectedShape, setSelectedShape] = createSignal<Shape | null>(null);
 
   onMount(() => {
     const mountStartTime = performance.now();
@@ -104,6 +107,31 @@ function App() {
     });
   });
 
+  // on mount, load state from URL and set default shape
+  onMount(() => {
+    // load state from URL
+    permaLink.loadFromUrl();
+
+    let shape = shapes[0];
+
+    const defaultShapeName = permaLink.getShape();
+    if (defaultShapeName) {
+      // find shape by name and set as selected
+      const shapeFind = shapes.find((s) => s.name === defaultShapeName);
+      if (shapeFind) {
+        shape = shapeFind;
+      }
+    }
+
+    // set default shape
+    setSelectedShape(shape);
+    permaLink.setShape(shape.name);
+    document.title = `Pixel Shape Generator - ${shape.name}`;
+  });
+
+  // set up effect to save state to URL on change
+  createEffect(permaLink.saveToUrl);
+
   return (
     <>
       <div
@@ -125,7 +153,7 @@ function App() {
           height={outputSize().height}
           viewBox={`${camera().position.x * camera().zoom} ${camera().position.y * camera().zoom} ${camera().zoom * outputSize().width} ${camera().zoom * outputSize().height}`}
         >
-          {selectedShape().shapeComponent({})}
+          {selectedShape()?.shapeComponent({})}
         </svg>
         <svg
           data-layer-name="grid"
@@ -158,6 +186,7 @@ function App() {
         </svg>
         <div id="zoom-controls">
           <button
+            class="button"
             aria-label="Zoom in"
             disabled={camera().zoom === MAX_ZOOM}
             onClick={() => changeZoom(0.8)}
@@ -165,6 +194,7 @@ function App() {
             +
           </button>
           <button
+            class="button"
             aria-label="Zoom out"
             disabled={camera().zoom === MIN_ZOOM}
             onClick={() => changeZoom(1.2)}
@@ -182,18 +212,30 @@ function App() {
         </span>
       </div>
       <div id="settings-container" aria-label="Shape Settings">
-        <Select
-          label="Shape"
-          selectedOption={selectedShape}
-          updateSelectedOption={setSelectedShape}
-          options={shapes.sort((a, b) => a.name.localeCompare(b.name))}
-          extractOptionValue={(shape) => shape.name}
-          extractOptionLabel={(shape) => shape.name}
-        />
-        {selectedShape().settingsComponent({})}
+        <div class="main-settings">
+          <Select
+            label="Shape"
+            selectedOption={selectedShape}
+            updateSelectedOption={setSelectedShape}
+            options={shapes.sort((a, b) => a.name.localeCompare(b.name))}
+            extractOptionValue={(shape) => shape?.name}
+            extractOptionLabel={(shape) => shape?.name}
+          />
+          <CopyLink
+            href={permaLink.rawUrl}
+            label="Permalink"
+            labelWhenClicked="Copied"
+            width="70px"
+          />
+        </div>
+        {selectedShape()?.settingsComponent({})}
         <div id="download-buttons">
-          <button onClick={downloadSVG}>Download SVG</button>
-          <button onClick={downloadPNG}>Download PNG</button>
+          <button class="button" onClick={downloadSVG}>
+            Download SVG
+          </button>
+          <button class="button" onClick={downloadPNG}>
+            Download PNG
+          </button>
         </div>
         <a
           aria-label="View GitHub repository"

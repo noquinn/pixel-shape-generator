@@ -6,6 +6,10 @@
   background-color: var(--ui-background-color);
 }
 
+.select-container:hover {
+  box-shadow: 0 0 2px var(--ui-shadow-color);
+}
+
 .select-container::after {
   content: '';
   position: absolute;
