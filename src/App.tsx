@@ -125,6 +125,7 @@ function App() {
     }
 
     setSelectedShape(shapes[0]);
+    permaLink.setShape(shapes[0].name)
   });
 
   // set up effect to save state to URL on change
