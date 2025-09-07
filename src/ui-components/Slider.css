@@ -47,3 +47,7 @@
   background-color: var(--cell-color);
   box-shadow: none;
 }
+
+.slider:hover {
+    box-shadow: 0 0 2px var(--ui-shadow-color);
+}

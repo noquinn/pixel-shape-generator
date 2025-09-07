@@ -47,7 +47,7 @@ const Switch = (props: {
         value={Number(props.currentVal())}
         onInput={handleInput}
       />
-      <label for={id}>{props.label}</label>
+      <label class="switch-label" for={id}>{props.label}</label>
     </div>
   );
 };

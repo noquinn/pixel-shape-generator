@@ -9,6 +9,7 @@
   --ui-background-color: #fdfdfd;
   --ui-border-color: #d1d5db;
   --ui-void-color: #d0d4de;
+  --ui-shadow-color: rgba(0, 0, 0, 0.2);
   --github-mark: url('/github-mark.svg');
   --ui-border-radius: 8px;
 }
@@ -25,6 +26,7 @@
     --ui-background-color: rgb(24 24 27);
     --ui-border-color: #606060;
     --ui-void-color: #4e4e4e;
+    --ui-shadow-color: rgba(255, 255, 255, 0.4);
     --github-mark: url('/github-mark-white.svg');
   }
 }
@@ -121,6 +123,7 @@ rect.highlighted {
 
 button:hover {
   touch-action: manipulation;
+  box-shadow: 0 0 2px var(--ui-shadow-color);
 }
 
 button {
