@@ -18,7 +18,7 @@ const Select = (props: {
     permaLink.setShape(selectedOptionVal);
 
     // rename windows title
-    document.title = `Pixel Shape - ${selectedOptionVal}`;
+    document.title = `Pixel Shape Generator - ${selectedOptionVal}`;
 
     props.updateSelectedOption(
       props.options.find(

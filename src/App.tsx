@@ -112,20 +112,21 @@ function App() {
     // load state from URL
     permaLink.loadFromUrl();
 
-    const defaultShape = permaLink.getShape();
-    if (!defaultShape) {
-      setSelectedShape(shapes[0]);
+    let shape = shapes[0];
+
+    const defaultShapeName = permaLink.getShape();
+    if (defaultShapeName) {
+      // find shape by name and set as selected
+      const shapeFind = shapes.find((s) => s.name === defaultShapeName);
+      if (shapeFind) {
+        shape = shapeFind;
+      }
     }
 
-    // find shape by name and set as selected
-    const shape = shapes.find((s) => s.name === defaultShape);
-    if (shape) {
-      setSelectedShape(shape);
-      return;
-    }
-
-    setSelectedShape(shapes[0]);
-    permaLink.setShape(shapes[0].name)
+    // set default shape
+    setSelectedShape(shape);
+    permaLink.setShape(shape.name);
+    document.title = `Pixel Shape Generator - ${shape.name}`;
   });
 
   // set up effect to save state to URL on change

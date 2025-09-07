@@ -32,7 +32,7 @@ const PermaLink = {
   saveToUrl() {
     const params = { ...PermaLink.getParams() };
 
-    const shape = PermaLink.getShape()
+    const shape = PermaLink.getShape();
     if (shape) {
       params['shape'] = shape;
     }
