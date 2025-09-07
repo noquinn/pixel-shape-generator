@@ -6,12 +6,11 @@ const CopyLink = (props: {
   labelWhenClicked: string;
   width?: string;
 }) => {
-  const onClick = (e: PointerEvent) => {
+  const onClick = (e: MouseEvent) => {
     // Only handle left click (usually button 0) to open the link with middle click or right click context menu
     if (e.button !== 0) return;
     e.preventDefault();
-
-    const anchor = e.currentTarget as HTMLAnchorElement;
+    const anchor = e.currentTarget as HTMLAnchorElement | null;
     if (!anchor?.href) return;
 
     navigator.clipboard.writeText(anchor.href).then(() => {
@@ -29,7 +28,7 @@ const CopyLink = (props: {
         width: props.width ?? 'auto',
         'text-align': 'center',
       }}
-      className="button"
+      class="button"
       onClick={onClick}
       href={props.href()}
     >
