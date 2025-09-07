@@ -19,7 +19,7 @@ const Slider = ({
   currentVal: Accessor<number>;
   updateVal: Setter<number>;
 }) => {
-  const id = `${label.toLowerCase().replace(/\s+/, '-')}-input`;
+  const id = `${label.toLowerCase().replace(/\s+/g, '-')}-input`;
 
   onMount(() => {
     const paramVal = permaLink.getParamNumber(id)

@@ -26,7 +26,7 @@ const Select = (props: {
       )
     );
   };
-  const id = `${props.label.replace(/\s+/, '-')}-select`;
+  const id = `${props.label.replace(/\s+/g, '-')}-select`;
   return (
     <div class="select-container">
       <label for={id}>{props.label}</label>

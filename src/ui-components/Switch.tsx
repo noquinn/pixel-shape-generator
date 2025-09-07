@@ -14,7 +14,7 @@ const Switch = (props: {
   currentVal: Accessor<boolean>;
   updateVal: Setter<boolean>;
 }) => {
-  const id = `${props.label.toLowerCase().replace(/\s+/, '-')}-toggle`;
+  const id = `${props.label.toLowerCase().replace(/\s+/g, '-')}-toggle`;
 
   onMount(() => {
     const paramVal = permaLink.getParamBoolean(id)
