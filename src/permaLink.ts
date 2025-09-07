@@ -21,8 +21,8 @@ const PermaLink = {
     return url.toString();
   },
 
+  // Timeout handle for debouncing URL updates to history
   timeout: null as ReturnType<typeof setTimeout> | null,
-
   rawUrl: url,
 
   /**
@@ -144,7 +144,7 @@ const PermaLink = {
    * Clears all parameters from the mutable state.
    */
   clearParams() {
-    // PermaLink.mutable.params = {};
+    PermaLink.mutable.params = {};
   },
 
   clearParam(name: string) {

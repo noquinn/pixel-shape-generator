@@ -4,11 +4,12 @@ import CellCircle from './helpers/CellCircle.tsx';
 import Slider from '../ui-components/Slider.tsx';
 import Switch from '../ui-components/Switch.tsx';
 
-const [diameter, setDiameter] = createSignal(10);
-const [offsetRayon, setOffsetRayon] = createSignal(0);
+const [diameter, setDiameter] = createSignal(11);
+const [thickness, setThickness] = createSignal(1);
 
 const [showAdvanced, setShowAdvanced] = createSignal(false);
 
+const [offsetRayon, setOffsetRayon] = createSignal(0);
 const [showGuide, setShowGuide] = createSignal(false);
 const [showBounds, setShowBounds] = createSignal(false);
 const [showCenter, setShowCenter] = createSignal(false);
@@ -16,13 +17,14 @@ const [showCenter, setShowCenter] = createSignal(false);
 const ShapeComponent = (): JSX.Element => {
   const d1 = diameter();
   const rOffset = offsetRayon();
+  const t = thickness();
 
-  // On centre l'ellipse sur (0, 0)
   return (
     <CellCircle
       x={0}
       y={0}
       diameter={d1}
+      thickness={t}
       debug={{
         rOffset: rOffset,
         showGuide: showGuide(),
@@ -43,6 +45,14 @@ const SettingsComponent = (): JSX.Element => {
         currentVal={diameter}
         updateVal={setDiameter}
       />
+      <Slider
+        label="Thickness"
+        min={1}
+        max={20}
+        currentVal={thickness}
+        updateVal={setThickness}
+        description={"High thickness with high diameter can cause long render"}
+      />
       <Switch
         label="Show Advanced Settings"
         currentVal={showAdvanced}
@@ -59,11 +69,6 @@ const SettingsComponent = (): JSX.Element => {
           description={'Low or high values may change the diameter'}
         />
         <Switch
-          label="Show Circle Draw Guide"
-          currentVal={showGuide}
-          updateVal={setShowGuide}
-        />
-        <Switch
           label="Show Bounds"
           currentVal={showBounds}
           updateVal={setShowBounds}
@@ -72,6 +77,11 @@ const SettingsComponent = (): JSX.Element => {
           label="Show Center"
           currentVal={showCenter}
           updateVal={setShowCenter}
+        />
+        <Switch
+          label="Show Circle Draw Guide"
+          currentVal={showGuide}
+          updateVal={setShowGuide}
         />
       </Show>
     </>

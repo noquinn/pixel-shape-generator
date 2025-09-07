@@ -13,58 +13,82 @@ import CellLine from './CellLine.tsx';
  * @param cx - x coordinate of the center
  * @param cy - y coordinate of the center
  * @param r - radius of the circle
- * @param isEvent
+ * @param thick - thickness of the circle (number of layers)
+ * @param isEvent - whether the diameter is even, to adjust for pixel grid alignment
  * @returns Array of points (x, y) representing the full circle
  */
 function CircleShape(
   cx: number,
   cy: number,
   r: number,
+  thick: number = 1,
   isEvent: boolean = false,
 ): Point[] {
   const points: Point[] = [];
 
+  // Ensure minimum for small circles
+  if (r < 2) {
+    r += 0.2;
+  } else {
+    // Slightly reduce radius to better fit the grid magic number
+    r -= 0.1;
+  }
+
+  if (thick > r) {
+    thick = r;
+  }
+
+  if (thick < 1) {
+    thick = 1;
+  }
+
   const xOffset = isEvent ? 0.5 : 0;
 
-  // Correction : inclure le bord du cercle
-  for (let x = xOffset; x < r; x++) {
-    const py = r * r - x * x;
-    const y = Math.sqrt(py);
+  // Draw each circle layer for thickness
+  for (let t = 0; t < thick-0.5; t += 0.5) {
+    const rt = r - t;
 
-    // All 8 octant's arc
-    points.push({ x: Math.round(cx + x), y: Math.round(cy - y) });
-    points.push({ x: Math.round(cx + y), y: Math.round(cy - x) });
+    for (let x = xOffset; x < rt; x++) {
+      const py = rt * rt - x * x;
+      const y = Math.sqrt(py);
 
-    points.push({ x: Math.round(cx + x), y: Math.round(cy + y) });
-    points.push({ x: Math.round(cx + y), y: Math.round(cy + x) });
+      // All 8 octant's arc
+      points.push({ x: Math.round(cx + x), y: Math.round(cy - y) });
+      points.push({ x: Math.round(cx + y), y: Math.round(cy - x) });
 
-    points.push({ x: Math.round(cx - x), y: Math.round(cy - y) });
-    points.push({ x: Math.round(cx - y), y: Math.round(cy - x) });
+      points.push({ x: Math.round(cx + x), y: Math.round(cy + y) });
+      points.push({ x: Math.round(cx + y), y: Math.round(cy + x) });
 
-    points.push({ x: Math.round(cx - x), y: Math.round(cy + y) });
-    points.push({ x: Math.round(cx - y), y: Math.round(cy + x) });
+      points.push({ x: Math.round(cx - x), y: Math.round(cy - y) });
+      points.push({ x: Math.round(cx - y), y: Math.round(cy - x) });
+
+      points.push({ x: Math.round(cx - x), y: Math.round(cy + y) });
+      points.push({ x: Math.round(cx - y), y: Math.round(cy + x) });
+    }
   }
 
   return points;
 }
 
 /**
- * SolidJS component that renders a discrete circle using the Cell component for each calculated point.
+ * SolidJS component that renders a discrete circle with thickness using the Cell component for each calculated point.
  * @param props.x - x coordinate of the center
  * @param props.y - y coordinate of the center
  * @param props.diameter - Diameter of the circle
+ * @param props.thickness - Thickness of the circle (number of cells)
  */
 const CellCircle = (props: {
   x: number;
   y: number;
   diameter: number;
+  thickness?: number;
   debug?: {
     xOffset?: number;
     yOffset?: number;
     rOffset?: number;
     showGuide?: boolean;
-    showBounds?: boolean
-    showCenter?: boolean
+    showBounds?: boolean;
+    showCenter?: boolean;
   };
 }) => {
   const isEven = props.diameter % 2 === 0;
@@ -74,17 +98,6 @@ const CellCircle = (props: {
 
   // Radius is diameter / 2, minus 1 to fit in the grid
   let r = (props.diameter - 1) / 2;
-
-  // 0.1 to avoid gaps on circle edge when diameter is small
-  if (r > 2) {
-    r -= 0.1;
-  }
-  // For very small circles, increase radius to avoid gaps
-  else {
-    r += 0.1;
-  }
-
-
 
   // Center the circle on the grid for even diameters
   if (isEven) {
@@ -112,7 +125,7 @@ const CellCircle = (props: {
   const top = props.y + yOffset - r;
   const bottom = props.y + yOffset + r;
 
-  const points = CircleShape(props.x + xOffset, props.y + yOffset, r, isEven);
+  const points = CircleShape(props.x + xOffset, props.y + yOffset, r, props.thickness, isEven);
 
   return (
     <>
@@ -135,7 +148,7 @@ const CellCircle = (props: {
 
       <For each={points}>{(c) => <Cell x={c.x} y={c.y} />}</For>
 
-      {props.debug?.showGuide && (
+      <Show when={props.debug?.showGuide}>
         <circle
           cx={props.x + xOffset + 0.5}
           cy={props.y + yOffset + 0.5}
@@ -144,7 +157,7 @@ const CellCircle = (props: {
           stroke-width="0.1"
           fill="none"
         />
-      )}
+      </Show>
     </>
   );
 };
