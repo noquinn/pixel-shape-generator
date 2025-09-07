@@ -5,6 +5,7 @@ import {
   onMount,
   For,
   Show,
+  createEffect,
 } from 'solid-js';
 
 import type { Shape } from './types';
@@ -41,6 +42,7 @@ import {
 } from './pointer.ts';
 import Select from './ui-components/Select.tsx';
 import './App.css';
+import permaLink from './permaLink.ts';
 
 let outputContainer: HTMLDivElement | undefined;
 const [outputSize, setOutputSize] = createSignal({ width: 0, height: 0 });
@@ -103,6 +105,24 @@ function App() {
       outputContainer!.removeEventListener('touchmove', preventDefault);
     });
   });
+
+  // on mount, load state from URL and set default shape
+  onMount(() => {
+    // load state from URL
+    permaLink.loadFromUrl();
+
+    const defaultShape = permaLink.getShape();
+    if (!defaultShape) return;
+
+    // find shape by name and set as selected
+    const shape = shapes.find((s) => s.name === defaultShape);
+    if (shape) {
+      setSelectedShape(shape);
+    }
+  });
+
+  // set up effect to save state to URL on change
+  createEffect(permaLink.saveToUrl);
 
   return (
     <>

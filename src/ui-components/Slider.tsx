@@ -1,5 +1,6 @@
-import type { JSX, Accessor, Setter } from 'solid-js';
+import  { JSX, Accessor, Setter, createEffect, onMount, onCleanup } from 'solid-js';
 import './Slider.css';
+import permaLink from '../permaLink.ts';
 
 const Slider = ({
   label,
@@ -18,9 +19,26 @@ const Slider = ({
   currentVal: Accessor<number>;
   updateVal: Setter<number>;
 }) => {
+  const id = `${label.toLowerCase().replace(/\s+/, '-')}-input`;
+
+  onMount(() => {
+    const paramVal = permaLink.getParamNumber(id)
+    if (paramVal !== null) {
+      updateVal(paramVal)
+    }
+
+    createEffect(() => {
+      permaLink.setParam(id, currentVal().toString())
+    })
+  })
+
+  onCleanup(() => {
+    permaLink.clearParam(id)
+  })
+
   const handleInput: JSX.EventHandler<HTMLInputElement, InputEvent> = (event) =>
     updateVal(Number(event.currentTarget.value));
-  const id = `${label.replace(/\s+/, '-')}-input`;
+
   const percent = () => ((currentVal() - min) / (max - min)) * 100;
   return (
     <div class="slider-container">
