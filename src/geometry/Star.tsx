@@ -1,12 +1,14 @@
-import { createSignal, For, JSX } from 'solid-js';
+import { createSignal, For, Show, JSX } from 'solid-js';
 import type { Shape } from '../types.d.ts';
 import CellLine from './helpers/CellLine.tsx';
 import Slider from '../ui-components/Slider.tsx';
+import Switch from '../ui-components/Switch.tsx';
 
 const [vertices, setVertices] = createSignal(5);
 const [diameter1, setDiameter1] = createSignal(20);
 const [diameter2, setDiameter2] = createSignal(40);
 const [rotation, setRotation] = createSignal(72);
+const [showDrawGuide, setShowDrawGuide] = createSignal(false);
 
 const calculateVertex = (i: number): { x: number; y: number } => {
   const radius = (i % 2 == 0 ? diameter1() : diameter2()) / 2;
@@ -23,16 +25,24 @@ const ShapeComponent = (): JSX.Element => {
     calculateVertex(i)
   );
   return (
-    <For each={verts}>
-      {(_, i) => (
-        <CellLine
-          x1={verts[i()].x}
-          y1={verts[i()].y}
-          x2={verts[(i() + 1) % (vertices() * 2)].x}
-          y2={verts[(i() + 1) % (vertices() * 2)].y}
+    <>
+      <For each={verts}>
+        {(_, i) => (
+          <CellLine
+            x1={verts[i()].x}
+            y1={verts[i()].y}
+            x2={verts[(i() + 1) % (vertices() * 2)].x}
+            y2={verts[(i() + 1) % (vertices() * 2)].y}
+          />
+        )}
+      </For>
+      <Show when={showDrawGuide()}>
+        <polygon
+          points={verts.map(({ x, y }) => `${x + 0.5},${y + 0.5}`).join(' ')}
+          class="draw-guide"
         />
-      )}
-    </For>
+      </Show>
+    </>
   );
 };
 
@@ -66,6 +76,11 @@ const SettingsComponent = (): JSX.Element => {
         max={360}
         currentVal={rotation}
         updateVal={setRotation}
+      />
+      <Switch
+        label="Show Draw Guide"
+        currentVal={showDrawGuide}
+        updateVal={setShowDrawGuide}
       />
     </>
   );
