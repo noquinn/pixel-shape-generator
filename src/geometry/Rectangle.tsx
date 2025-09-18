@@ -1,11 +1,13 @@
-import { createSignal, For, JSX } from 'solid-js';
+import { createSignal, For, JSX, Show } from 'solid-js';
 import type { Shape } from '../types.d.ts';
 import Slider from '../ui-components/Slider.tsx';
+import Switch from '../ui-components/Switch.tsx';
 import CellLine from './helpers/CellLine.tsx';
 
 const [width, setWidth] = createSignal(15);
 const [height, setHeight] = createSignal(25);
 const [rotation, setRotation] = createSignal(30);
+const [showDrawGuide, setShowDrawGuide] = createSignal(false);
 
 const ShapeComponent = (): JSX.Element => {
   const a = () => width() / 2;
@@ -30,19 +32,27 @@ const ShapeComponent = (): JSX.Element => {
   ];
 
   return (
-    <For each={corners}>
-      {(corner, i) => {
-        const nextCorner = corners[(i() + 1) % corners.length];
-        return (
-          <CellLine
-            x1={corner.x}
-            y1={corner.y}
-            x2={nextCorner.x}
-            y2={nextCorner.y}
-          />
-        );
-      }}
-    </For>
+    <>
+      <For each={corners}>
+        {(corner, i) => {
+          const nextCorner = corners[(i() + 1) % corners.length];
+          return (
+            <CellLine
+              x1={corner.x}
+              y1={corner.y}
+              x2={nextCorner.x}
+              y2={nextCorner.y}
+            />
+          );
+        }}
+      </For>
+      <Show when={showDrawGuide()}>
+        <polygon
+          points={corners.map(({ x, y }) => `${x + 0.5},${y + 0.5}`).join(' ')}
+          class="draw-guide"
+        />
+      </Show>
+    </>
   );
 };
 
@@ -69,6 +79,11 @@ const SettingsComponent = (): JSX.Element => {
         max={360}
         currentVal={rotation}
         updateVal={setRotation}
+      />
+      <Switch
+        label="Show Draw Guide"
+        currentVal={showDrawGuide}
+        updateVal={setShowDrawGuide}
       />
     </>
   );
