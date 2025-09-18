@@ -1,11 +1,21 @@
-import { createSignal, createMemo, For, JSX } from 'solid-js';
+import { createSignal, createMemo, For, Show, JSX } from 'solid-js';
 import type { Shape } from '../types.d.ts';
 import CellArc from './helpers/CellArc.tsx';
 import Slider from '../ui-components/Slider.tsx';
+import Switch from '../ui-components/Switch.tsx';
+
+type Arc = {
+  x: number;
+  y: number;
+  radius: number;
+  startAngle: number;
+  endAngle: number;
+};
 
 const [sides, setSides] = createSignal(3);
 const [diameter, setDiameter] = createSignal(30);
 const [rotation, setRotation] = createSignal(0);
+const [showDrawGuide, setShowDrawGuide] = createSignal(false);
 
 const ShapeComponent = () => {
   const theta = createMemo(() => (2 * Math.PI) / sides());
@@ -33,19 +43,42 @@ const ShapeComponent = () => {
     });
 
   return (
-    <For each={arcs()}>
-      {(arc) => (
-        <CellArc
-          x={arc.x}
-          y={arc.y}
-          radius={arc.radius}
-          startAngle={arc.startAngle}
-          endAngle={arc.endAngle}
-        />
-      )}
-    </For>
+    <>
+      <For each={arcs()}>
+        {(arc) => (
+          <CellArc
+            x={arc.x}
+            y={arc.y}
+            radius={arc.radius}
+            startAngle={arc.startAngle}
+            endAngle={arc.endAngle}
+          />
+        )}
+      </For>
+      <Show when={showDrawGuide()}>
+        <path d={getReuleauxPath(arcs())} class="draw-guide" />
+      </Show>
+    </>
   );
 };
+
+function getReuleauxPath(arcs: Arc[]): string {
+  const getArcEnd = (arc: Arc) => {
+    return {
+      x: arc.x + arc.radius * Math.cos(arc.endAngle) + 0.5,
+      y: arc.y + arc.radius * Math.sin(arc.endAngle) + 0.5,
+    };
+  };
+
+  const start = getArcEnd(arcs[arcs.length - 1]);
+  let path = `M ${start.x} ${start.y}`;
+  arcs.forEach((arc) => {
+    const end = getArcEnd(arc);
+    path += ` A ${arc.radius} ${arc.radius} 0 0 1 ${end.x} ${end.y}`;
+  });
+  path += ' Z';
+  return path;
+}
 
 const SettingsComponent = (): JSX.Element => {
   return (
@@ -71,6 +104,11 @@ const SettingsComponent = (): JSX.Element => {
         max={360}
         currentVal={rotation}
         updateVal={setRotation}
+      />
+      <Switch
+        label="Show Draw Guide"
+        currentVal={showDrawGuide}
+        updateVal={setShowDrawGuide}
       />
     </>
   );
