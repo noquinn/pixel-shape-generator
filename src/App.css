@@ -4,6 +4,7 @@
   --cell-highlight-color: #a33111;
   --cell-debug-color: #eee75c;
   --cell-debug-highlight-color: #ea7b21;
+  --draw-guide: #ff0000;
   --grid-line-color: #d4d4d4;
   --text-color: #000;
   --ui-background-color: #fdfdfd;
@@ -20,6 +21,7 @@
     --cell-highlight-color: #942c10;
     --cell-debug-color: #8e8e0e;
     --cell-debug-highlight-color: #875310;
+    --draw-guide: #ff0000;
     --grid-line-color: #2f2f2f;
     --text-color: #dadada;
     --ui-background-color: rgb(24 24 27);
@@ -102,6 +104,13 @@ rect.highlighted {
 
 .cell.debug.highlighted {
   fill: var(--cell-debug-highlight-color);
+}
+
+.draw-guide {
+  stroke: var(--draw-guide);
+  stroke-width: 0.1;
+  fill: none;
+  pointer-events: none;
 }
 
 .grid-line {

@@ -138,9 +138,7 @@ const CellCircle = (props: {
           cx={props.x + xOffset + 0.5}
           cy={props.y + yOffset + 0.5}
           r={r}
-          stroke="red"
-          stroke-width="0.1"
-          fill="none"
+          class="draw-guide"
         />
       )}
     </>
