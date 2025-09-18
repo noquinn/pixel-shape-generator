@@ -10,6 +10,7 @@ const [rotation, setRotation] = createSignal(0);
 const [showAngleBisectors, setShowAngleBisectors] = createSignal(false);
 const [showPerpendicularBisectors, setShowPerpendicularBisectors] =
   createSignal(false);
+const [showDrawGuide, setShowDrawGuide] = createSignal(false);
 
 const calculateVertex = (i: number): { x: number; y: number } => {
   const radius = diameter() / 2;
@@ -52,6 +53,12 @@ const ShapeComponent = (): JSX.Element => {
           />
         )}
       </For>
+      <Show when={showDrawGuide()}>
+        <polygon
+          points={verts.map(({ x, y }) => `${x + 0.5},${y + 0.5}`).join(' ')}
+          class="draw-guide"
+        />
+      </Show>
     </>
   );
 };
@@ -81,14 +88,19 @@ const SettingsComponent = (): JSX.Element => {
         updateVal={setRotation}
       />
       <Switch
-        label="Angle Bisectors"
+        label="Show Angle Bisectors"
         currentVal={showAngleBisectors}
         updateVal={setShowAngleBisectors}
       />
       <Switch
-        label="Perpendicular Bisectors"
+        label="Show Perpendicular Bisectors"
         currentVal={showPerpendicularBisectors}
         updateVal={setShowPerpendicularBisectors}
+      />
+      <Switch
+        label="Show Draw Guide"
+        currentVal={showDrawGuide}
+        updateVal={setShowDrawGuide}
       />
     </>
   );
