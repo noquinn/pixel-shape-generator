@@ -1,4 +1,4 @@
-import { createSignal, For, JSX } from 'solid-js';
+import { createSignal, For, Show, JSX } from 'solid-js';
 import type { Shape } from '../types.d.ts';
 import CellLine from './helpers/CellLine.tsx';
 import Slider from '../ui-components/Slider.tsx';
@@ -9,6 +9,7 @@ const [diameter, setDiameter] = createSignal(50);
 const [loops, setLoops] = createSignal(4);
 const [rotation, setRotation] = createSignal(30);
 const [invert, setInvert] = createSignal(false);
+const [showDrawGuide, setShowDrawGuide] = createSignal(false);
 
 const ShapeComponent = (): JSX.Element => {
   let k = 0;
@@ -27,16 +28,24 @@ const ShapeComponent = (): JSX.Element => {
   }
 
   return (
-    <For each={Array.from({ length: verts.length - 1 })}>
-      {(_, i) => (
-        <CellLine
-          x1={verts[i()].x}
-          y1={verts[i()].y}
-          x2={verts[i() + 1].x}
-          y2={verts[i() + 1].y}
+    <>
+      <For each={Array.from({ length: verts.length - 1 })}>
+        {(_, i) => (
+          <CellLine
+            x1={verts[i()].x}
+            y1={verts[i()].y}
+            x2={verts[i() + 1].x}
+            y2={verts[i() + 1].y}
+          />
+        )}
+      </For>
+      <Show when={showDrawGuide()}>
+        <polyline
+          points={verts.map(({ x, y }) => `${x + 0.5},${y + 0.5}`).join(' ')}
+          class="draw-guide"
         />
-      )}
-    </For>
+      </Show>
+    </>
   );
 };
 
@@ -72,6 +81,11 @@ const SettingsComponent = (): JSX.Element => {
         updateVal={setRotation}
       />
       <Switch label="Invert" currentVal={invert} updateVal={setInvert} />
+      <Switch
+        label="Show Draw Guide"
+        currentVal={showDrawGuide}
+        updateVal={setShowDrawGuide}
+      />
     </>
   );
 };
