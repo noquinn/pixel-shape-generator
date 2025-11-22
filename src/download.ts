@@ -118,7 +118,25 @@ const downloadPNG = (): void => {
     }
 
     downloadBlob(blob, fileName);
-  });
+  }, 'image/png');
 };
 
-export { downloadSVG, downloadPNG };
+const downloadPBM = (): void => {
+  const { cellsPositive, width, height, fileName } = getSvgData();
+  const cellSet = new Set(cellsPositive.map((cell) => `${cell.x},${cell.y}`));
+
+  let pbmData = `P1\n${width} ${height}\n`;
+
+  for (let y = 0; y < height; y++) {
+    let row = '';
+    for (let x = 0; x < width; x++) {
+      row += cellSet.has(`${x},${y}`) ? '1 ' : '0 ';
+    }
+    pbmData += row.trim() + '\n';
+  }
+
+  const blob = new Blob([pbmData], { type: 'image/x-portable-bitmap' });
+  downloadBlob(blob, `${fileName}.pbm`);
+};
+
+export { downloadSVG, downloadPNG, downloadPBM };

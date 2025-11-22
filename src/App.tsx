@@ -18,7 +18,7 @@ import Star from './geometry/Star.tsx';
 import Spirangle from './geometry/Spirangle.tsx';
 import Circle from './geometry/Circle.tsx';
 
-import { downloadSVG, downloadPNG } from './download.ts';
+import { downloadSVG, downloadPNG, downloadPBM } from './download.ts';
 import {
   camera,
   panCamera,
@@ -265,6 +265,7 @@ function App() {
         <div id="download-buttons">
           <button onClick={downloadSVG}>Download SVG</button>
           <button onClick={downloadPNG}>Download PNG</button>
+          <button onClick={downloadPBM}>Download PBM</button>
         </div>
         <a
           aria-label="View GitHub repository"
