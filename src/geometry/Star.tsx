@@ -1,6 +1,7 @@
 import { createSignal, For, Show, JSX } from 'solid-js';
 import type { Shape } from '../types.d.ts';
 import CellLine from './helpers/CellLine.tsx';
+import CellCircle from './helpers/CellCircle.tsx';
 import Slider from '../ui-components/Slider.tsx';
 import Switch from '../ui-components/Switch.tsx';
 
@@ -8,10 +9,12 @@ const [vertices, setVertices] = createSignal(5);
 const [diameter1, setDiameter1] = createSignal(20);
 const [diameter2, setDiameter2] = createSignal(40);
 const [rotation, setRotation] = createSignal(72);
+const [showBounds, setShowBounds] = createSignal(false);
 const [showDrawGuide, setShowDrawGuide] = createSignal(false);
 
 const calculateVertex = (i: number): { x: number; y: number } => {
-  const radius = (i % 2 == 0 ? diameter1() : diameter2()) / 2;
+  const d = i % 2 == 0 ? diameter1() : diameter2();
+  const radius = (d - 1) / 2;
   const angle =
     (i * 2 * Math.PI) / vertices() / 2 + (rotation() * Math.PI) / 180;
   return {
@@ -26,6 +29,10 @@ const ShapeComponent = (): JSX.Element => {
   );
   return (
     <>
+      <Show when={showBounds()}>
+        <CellCircle x={0} y={0} diameter={diameter1()} debug />
+        <CellCircle x={0} y={0} diameter={diameter2()} debug />
+      </Show>
       <For each={verts}>
         {(_, i) => (
           <CellLine
@@ -76,6 +83,11 @@ const SettingsComponent = (): JSX.Element => {
         max={360}
         currentVal={rotation}
         updateVal={setRotation}
+      />
+      <Switch
+        label="Show Bounds"
+        currentVal={showBounds}
+        updateVal={setShowBounds}
       />
       <Switch
         label="Show Draw Guide"
