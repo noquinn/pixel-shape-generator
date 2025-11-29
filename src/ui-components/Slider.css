@@ -11,13 +11,31 @@
 .slider-container > div {
   display: flex;
   justify-content: space-between;
-  column-gap: 24px;
+  align-items: center;
+  column-gap: 8px;
   flex-wrap: wrap;
 }
 
-.slider-description {
-  margin-top: 8px;
-  font-size: 14px;
+.slider-container > div > input[type='number'] {
+  appearance: textfield;
+  width: fit-content;
+  padding: 4px 8px;
+  border: 1px solid var(--ui-border-color);
+  border-radius: var(--ui-border-radius);
+  background-color: var(--ui-background-color);
+  color: var(--text-color);
+  font-size: 16px;
+  text-align: center;
+}
+
+.slider-container > div > input[type='number'].invalid {
+  border-color: #e74c3c;
+  background-color: rgba(231, 76, 60, 0.4);
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  display: none;
 }
 
 .slider {

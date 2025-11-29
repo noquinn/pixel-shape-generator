@@ -38,7 +38,9 @@ const getSvgData = (): SvgData => {
     y: cell.y + Math.abs(minY),
   }));
 
-  const fileName = [...document.querySelectorAll('input, select')]
+  const fileName = [
+    ...document.querySelectorAll(`input:not([type='range']), select`),
+  ]
     .map((elem) => (elem as HTMLInputElement | HTMLSelectElement).value)
     .join('-')
     .replace(/\s/g, '')
