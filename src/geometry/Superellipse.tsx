@@ -28,14 +28,14 @@ const ShapeComponent = (): JSX.Element => {
 
   for (let x = cx + 1; x < right; x++) {
     let y = Math.round(b * (1 - (Math.abs(x) / a) ** n) ** (1 / n)) - cy;
-    y = Math.max(cy, y);
+    y = Math.max(cy, Math.min(y, bottom));
     points.push({ x, y });
   }
   points.push({ x: cx, y: bottom - cy });
 
   for (let y = cy + 1; y < bottom; y++) {
     let x = Math.round(a * (1 - (Math.abs(y) / b) ** n) ** (1 / n)) - cx;
-    x = Math.max(cx, x);
+    x = Math.max(cx, Math.min(x, right));
     points.push({ x, y });
   }
   points.push({ x: right - cx, y: cy });
