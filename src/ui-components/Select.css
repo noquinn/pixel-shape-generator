@@ -31,6 +31,10 @@
   pointer-events: none;
 }
 
+.select-container:hover {
+  background-color: var(--ui-hover-color);
+}
+
 select {
   padding: 22px 34px 10px 10px;
   box-sizing: content-box;

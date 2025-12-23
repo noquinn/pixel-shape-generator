@@ -262,10 +262,17 @@ function App() {
           extractOptionLabel={(shape) => shape.name}
         />
         {selectedShape().settingsComponent({})}
-        <div id="download-buttons">
-          <button onClick={downloadSVG}>Download SVG</button>
-          <button onClick={downloadPNG}>Download PNG</button>
-          <button onClick={downloadPBM}>Download PBM</button>
+        <div class="button-group">
+          <span aria-hidden="true">Download</span>
+          <button onClick={downloadSVG} aria-label="Download as SVG">
+            SVG
+          </button>
+          <button onClick={downloadPNG} aria-label="Download as PNG">
+            PNG
+          </button>
+          <button onClick={downloadPBM} aria-label="Download as PBM">
+            PBM
+          </button>
         </div>
         <a
           aria-label="View GitHub repository"

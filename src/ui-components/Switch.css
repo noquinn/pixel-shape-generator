@@ -21,6 +21,10 @@
   border-radius: 50%;
 }
 
+.switch:hover::after {
+  background-color: var(--ui-hover-color);
+}
+
 .switch,
 .switch::after {
   transition: all 100ms ease-in-out;
@@ -39,4 +43,11 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  max-width: 360px;
+  padding: 8px 10px;
+  border: 1px solid var(--ui-border-color);
+  border-radius: var(--ui-border-radius);
+  background-color: var(--ui-background-color);
 }

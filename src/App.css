@@ -8,6 +8,7 @@
   --grid-line-color: #d4d4d4;
   --text-color: #000;
   --ui-background-color: #fdfdfd;
+  --ui-hover-color: #f8f4f4;
   --ui-border-color: #d1d5db;
   --ui-void-color: #d0d4de;
   --github-mark: url('/github-mark.svg');
@@ -25,6 +26,7 @@
     --grid-line-color: #2f2f2f;
     --text-color: #dadada;
     --ui-background-color: rgb(24 24 27);
+    --ui-hover-color: #2a2a2f;
     --ui-border-color: #606060;
     --ui-void-color: #4e4e4e;
     --github-mark: url('/github-mark-white.svg');
@@ -130,6 +132,7 @@ rect.highlighted {
 
 button:hover {
   touch-action: manipulation;
+  background-color: var(--ui-hover-color);
 }
 
 button {
@@ -158,7 +161,6 @@ button {
   border: 1px solid var(--ui-border-color);
   border-radius: 0;
   font-size: 24px;
-  background-color: var(--ui-background-color);
   color: var(--text-color);
 }
 
@@ -203,11 +205,29 @@ button {
   overscroll-behavior: contain;
 }
 
-#download-buttons {
+.button-group > button {
+  border-radius: 0;
+  border-width: 1px 1px 1px 0;
+}
+
+.button-group > button:last-child {
+  border-radius: 0 var(--ui-border-radius) var(--ui-border-radius) 0;
+  border-right-width: 1px;
+}
+
+.button-group > span {
+  background-color: var(--ui-void-color);
+  padding: 10px;
+  border: 1px solid var(--ui-border-color);
+  border-radius: var(--ui-border-radius) 0 0 var(--ui-border-radius);
+}
+
+.button-group {
   display: flex;
   flex-direction: row;
-  gap: 10px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  width: min-content;
+  padding: 0;
 }
 
 @media (orientation: landscape) {
