@@ -28,7 +28,7 @@
   text-align: center;
 }
 
-.slider-container > div > input[type='number'].invalid {
+.slider-container > div > input[type='number']:invalid {
   border-color: #e74c3c;
   background-color: rgba(231, 76, 60, 0.4);
 }

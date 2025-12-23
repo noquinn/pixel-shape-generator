@@ -1,5 +1,4 @@
 import type { JSX, Accessor, Setter } from 'solid-js';
-import { createSignal } from 'solid-js';
 import './Slider.css';
 
 const Slider = ({
@@ -17,38 +16,24 @@ const Slider = ({
   currentVal: Accessor<number>;
   updateVal: Setter<number>;
 }) => {
-  const [isInvalid, setIsInvalid] = createSignal(false);
-
-  const isValidStep = (val: number) => {
-    // check whether input is valid, given the step size
-    const stepsFromMin = (val - min) / step;
-    return Math.abs(stepsFromMin - Math.round(stepsFromMin)) < 1e-10;
-  };
-
   const handleInput: JSX.EventHandler<HTMLInputElement, InputEvent> = (
     event
   ) => {
-    const val = Number(event.currentTarget.value);
-    const invalid = isNaN(val) || val < min || val > max || !isValidStep(val);
-    setIsInvalid(invalid);
-    if (invalid) return;
-    updateVal(val);
+    const {
+      valueAsNumber,
+      validity: { valid },
+    } = event.currentTarget;
+    if (!valid) return;
+    updateVal(valueAsNumber);
   };
 
   const handleBlur: JSX.EventHandler<HTMLInputElement, FocusEvent> = (
     event
   ) => {
-    const val = Number(event.currentTarget.value);
-    if (val < min) {
-      updateVal(min);
-    } else if (val > max) {
-      updateVal(max);
-    } else if (!isValidStep(val)) {
-      const stepsFromMin = Math.round((val - min) / step);
-      updateVal(min + stepsFromMin * step);
-    }
+    const { rangeOverflow, rangeUnderflow } = event.currentTarget.validity;
+    if (rangeUnderflow) updateVal(min);
+    if (rangeOverflow) updateVal(max);
     event.currentTarget.value = String(currentVal());
-    setIsInvalid(false);
   };
 
   const id = `${label.replace(/\s+/, '-')}`;
@@ -70,7 +55,7 @@ const Slider = ({
           onInput={handleInput}
           onBlur={handleBlur}
           aria-labelledby={`${id}-label`}
-          classList={{ invalid: isInvalid() }}
+          required
         />
       </div>
       <div>
